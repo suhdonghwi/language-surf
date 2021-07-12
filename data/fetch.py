@@ -26,6 +26,9 @@ def is_valid_page_name(page_name):
         "Non-English-based programming languages",
         "Timeline of programming languages",
         "Generational list of programming languages",
+        "Markup language",
+        "XCore XS1",  # Not a PL
+        "Quantum programming",  # Too general
     ]
 
 
@@ -52,20 +55,41 @@ def slugify_page_name(page_name):
         .replace(".", "dot")
         .replace("--", "minusminus")
         .replace("/", "-")
+        .replace(":", "-")
         .replace("!", "")
-        .replace(":", "")
+        .replace("′′", "doubleprime")
         .lower()
+        .strip()
+    )
+
+    assert all(
+        map(
+            lambda l: l.isalnum() or l == " " or l == "-",
+            list(page_name),
+        )
     )
     return page_name
 
 
+def fetch_language_data(page_name):
+    slug = slugify_page_name(page_name)
+    cache_path = "./data/cache/langs/" + slug + ".pkl"
+
+    cache = load_cache(cache_path)
+    if cache is None:
+        try:
+            page = wptools.page(page_name)
+            data = page.get().data
+        except LookupError:
+            print("Skipping " + page_name + " : page does not exist")
+            return None
+
+        save_cache(cache_path, data)
+        return data
+    else:
+        return cache
+
+
 if __name__ == "__main__":
-    s = set()
-
     for lang in fetch_list_of_langs():
-        print(lang, "->", slugify_page_name(lang))
-        for ch in lang:
-            if not ch.isdigit() and not ch.isalpha():
-                s.add(ch)
-
-    print(s)
+        fetch_language_data(lang)
