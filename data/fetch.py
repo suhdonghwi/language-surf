@@ -26,9 +26,42 @@ def is_valid_page_name(page_name):
         "Non-English-based programming languages",
         "Timeline of programming languages",
         "Generational list of programming languages",
+        "Quantum programming",
         "Markup language",
-        "XCore XS1",  # Not a PL
-        "Quantum programming",  # Too general
+        # Not a PL
+        "Autodesk 3ds Max",
+        "XCore XS1",
+        "Ch (computer programming)",
+        "ColdFusion",
+        # Too little information
+        "Accent (programming language)",
+        "Adenine (programming language)",
+        "Agilent VEE",
+        "Agora (programming language)",
+        "AIMMS",
+        "Apache Pig",
+        "Apex (programming language)",
+        "Argus (programming language)",
+        "Averest",
+        "Batch file",
+        "Bertrand (programming language)",
+        "BlooP and FlooP",
+        "Cayenne (programming language)",
+        "CESIL",
+        "Céu (programming language)",
+        "CFEngine",
+        "CobolScript",
+        "COMPASS",
+        "Cryptol",
+        "Cybil (programming language)",
+        "Cypher Query Language",
+        "CEEMAC",
+        # Excluding shells
+        "Bash (Unix shell)",
+        "C Shell",
+        "Control Language"
+        # Excluding shading languages
+        "Cg (programming language)",
     ]
 
 
@@ -37,7 +70,8 @@ def fetch_list_of_langs(page_name="List of programming languages"):
     cache = load_cache(cache_path)
     if cache is None:
         page = wptools.page(page_name)
-        data = page.get_query().data["links"]
+        data = page.get().data["links"]
+        print(data)
         data = list(filter(lambda l: is_valid_page_name(l), data))
 
         save_cache(cache_path, data)
@@ -91,5 +125,9 @@ def fetch_language_data(page_name):
 
 
 if __name__ == "__main__":
-    for lang in fetch_list_of_langs():
-        fetch_language_data(lang)
+    l = fetch_list_of_langs()
+    print(l)
+
+    data = fetch_language_data(l[0])
+    print(data.keys())
+    print(data["infobox"])
