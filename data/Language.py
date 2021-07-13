@@ -5,5 +5,3 @@ class Language:
         self.description = data["exrest"]
 
         self.logo = data.get("logo")
-        self.discontinued = "discontinued" in data
-        self.dialects = data["dialects"]

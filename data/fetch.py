@@ -86,9 +86,8 @@ def fetch_language_data(page_name):
 
 
 if __name__ == "__main__":
-    l = fetch_list_of_langs()
-    print(l)
+    lang_list = fetch_list_of_langs()
+    print(lang_list)
 
-    data = fetch_language_data(l[0])
-    print(data.keys())
-    print(data["infobox"])
+    for lang in lang_list:
+        fetch_language_data(lang)
