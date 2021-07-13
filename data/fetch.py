@@ -3,6 +3,8 @@ import wptools
 import pickle
 import re
 
+from exclude_list import exclude_list
+
 
 def load_cache(path):
     if os.path.exists(path):
@@ -18,51 +20,10 @@ def save_cache(path, data):
 
 
 def is_valid_page_name(page_name):
-    return not page_name.startswith(
-        ("List of", "Lists of", "Comparison of", "History of")
-    ) and page_name not in [
-        "Programming language",
-        "Esoteric programming language",
-        "Non-English-based programming languages",
-        "Timeline of programming languages",
-        "Generational list of programming languages",
-        "Quantum programming",
-        "Markup language",
-        # Not a PL
-        "Autodesk 3ds Max",
-        "XCore XS1",
-        "Ch (computer programming)",
-        "ColdFusion",
-        # Too little information
-        "Accent (programming language)",
-        "Adenine (programming language)",
-        "Agilent VEE",
-        "Agora (programming language)",
-        "AIMMS",
-        "Apache Pig",
-        "Apex (programming language)",
-        "Argus (programming language)",
-        "Averest",
-        "Batch file",
-        "Bertrand (programming language)",
-        "BlooP and FlooP",
-        "Cayenne (programming language)",
-        "CESIL",
-        "Céu (programming language)",
-        "CFEngine",
-        "CobolScript",
-        "COMPASS",
-        "Cryptol",
-        "Cybil (programming language)",
-        "Cypher Query Language",
-        "CEEMAC",
-        # Excluding shells
-        "Bash (Unix shell)",
-        "C Shell",
-        "Control Language"
-        # Excluding shading languages
-        "Cg (programming language)",
-    ]
+    return (
+        not page_name.startswith(("List of", "Lists of", "Comparison of", "History of"))
+        and page_name not in exclude_list
+    )
 
 
 def fetch_list_of_langs(page_name="List of programming languages"):
