@@ -74,7 +74,10 @@ def fetch_language_data(page_name):
     if cache is None:
         try:
             page = wptools.page(page_name)
-            data = page.get().data
+            page.get_query()
+            page.get_parse()
+            page.get_restbase()
+            data = page.data
         except LookupError:
             print("Skipping " + page_name + " : page does not exist")
             return None
