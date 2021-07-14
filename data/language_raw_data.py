@@ -12,9 +12,9 @@ class LanguageRawData:
         self.update()
 
     def update(self):
+        self.wikipedia_page.get_restbase()
         self.wikipedia_page.get_query()
         self.wikipedia_page.get_parse()
-        self.wikipedia_page.get_restbase()
 
         wikidata_id = self.wikipedia_page.data["wikidata_url"].split("/")[-1]
         wikidata_dict = get_entity_dict_from_api(wikidata_id)

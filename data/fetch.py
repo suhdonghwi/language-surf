@@ -99,5 +99,10 @@ if __name__ == "__main__":
         if raw_data is not None:
             raw_data_list.append(raw_data)
 
+    redirect_dict = {}
+    for raw_data in raw_data_list:
+        for redirect in raw_data.wikipedia_page.data["redirects"]:
+            redirect["title"]
+
     for raw_data in raw_data_list:
         lang = Language(raw_data, raw_data_list)

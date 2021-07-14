@@ -1,12 +1,23 @@
-from re import S
+import re
 
 
 def preprocess_wikitext(s):
     return s.replace("\n\n", "\n").replace("\n", " ")
 
 
+def find_page_names(s):
+    links = re.findall(r"\[\[([^\[\]]+))\]\]", s)
+    page_names = []
+    for link in links:
+        page_names.append(link.split("|")[0].strip())
+
+    return page_names
+
+
 class Language:
     def __init__(self, raw_data, raw_data_list):
+        self.id = raw_data.id
+
         self.label = raw_data.wikipedia_page.data["label"]
         self.description = preprocess_wikitext(raw_data.wikipedia_page.data["extext"])
         self.wikipedia_pageid = raw_data.wikipedia_page.data["pageid"]
