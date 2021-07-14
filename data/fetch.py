@@ -3,6 +3,9 @@ import wptools
 import pickle
 import re
 
+from qwikidata.entity import WikidataItem
+from qwikidata.linked_data_interface import get_entity_dict_from_api
+
 from exclude_list import exclude_list
 
 
@@ -77,6 +80,12 @@ def fetch_language_data(page_name):
             page.get_query()
             page.get_parse()
             page.get_restbase()
+
+            wikidata_id = page.data["wikidata_url"].split("/")[-1]
+            wikidata_dict = get_entity_dict_from_api(wikidata_id)
+            wikidata_item = WikidataItem(wikidata_dict)
+
+            page.data["wikidata_item"] = wikidata_item
             data = page.data
         except LookupError:
             print("Skipping " + page_name + " : page does not exist")
