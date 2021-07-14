@@ -7,6 +7,7 @@ from qwikidata.entity import WikidataItem
 from qwikidata.linked_data_interface import get_entity_dict_from_api
 
 from exclude_list import exclude_list
+from language_raw_data import LanguageRawData
 
 
 def load_cache(path):
@@ -71,22 +72,12 @@ def slugify_page_name(page_name):
 
 def fetch_language_data(page_name):
     slug = slugify_page_name(page_name)
-    cache_path = "./data/cache/langs/" + slug + ".pkl"
+    cache_path = "./data/cache/raw_data/" + slug + ".pkl"
 
     cache = load_cache(cache_path)
     if cache is None:
         try:
-            page = wptools.page(page_name)
-            page.get_query()
-            page.get_parse()
-            page.get_restbase()
-
-            wikidata_id = page.data["wikidata_url"].split("/")[-1]
-            wikidata_dict = get_entity_dict_from_api(wikidata_id)
-            wikidata_item = WikidataItem(wikidata_dict)
-
-            page.data["wikidata_item"] = wikidata_item
-            data = page.data
+            data = LanguageRawData(page_name)
         except LookupError:
             print("Skipping " + page_name + " : page does not exist")
             return None
