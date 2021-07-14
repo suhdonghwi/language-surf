@@ -8,6 +8,7 @@ from qwikidata.linked_data_interface import get_entity_dict_from_api
 
 from exclude_list import exclude_list
 from language_raw_data import LanguageRawData
+from language import Language
 
 
 def load_cache(path):
@@ -70,14 +71,14 @@ def slugify_page_name(page_name):
     return page_name
 
 
-def fetch_language_data(page_name):
+def fetch_language_raw_data(id, page_name):
     slug = slugify_page_name(page_name)
     cache_path = "./data/cache/raw_data/" + slug + ".pkl"
 
     cache = load_cache(cache_path)
     if cache is None:
         try:
-            data = LanguageRawData(page_name)
+            data = LanguageRawData(id, page_name)
         except LookupError:
             print("Skipping " + page_name + " : page does not exist")
             return None
@@ -92,5 +93,11 @@ if __name__ == "__main__":
     lang_list = fetch_list_of_langs()
     print(lang_list)
 
-    for lang in lang_list:
-        fetch_language_data(lang)
+    raw_data_list = []
+    for (id, lang) in enumerate(lang_list):
+        raw_data = fetch_language_raw_data(id, lang)
+        if raw_data is not None:
+            raw_data_list.append(raw_data)
+
+    for raw_data in raw_data_list:
+        lang = Language(raw_data, raw_data_list)

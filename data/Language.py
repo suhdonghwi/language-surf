@@ -1,7 +1,35 @@
-class Language:
-    def __init__(self, data):
-        self.id = data["pageid"]
-        self.label = data["label"]
-        self.description = data["exrest"]
+from re import S
 
-        self.logo = data.get("logo")
+
+def preprocess_wikitext(s):
+    return s.replace("\n\n", "\n").replace("\n", " ")
+
+
+class Language:
+    def __init__(self, raw_data, raw_data_list):
+        self.label = raw_data.wikipedia_page.data["label"]
+        self.description = preprocess_wikitext(raw_data.wikipedia_page.data["extext"])
+        self.wikipedia_pageid = raw_data.wikipedia_page.data["pageid"]
+
+        claim_groups = raw_data.wikidata_item.get_claim_groups()
+
+        self.inception = None
+        self.paradigm = None
+        self.typing_discipline = None
+
+        if "P571" in claim_groups:  # Inception
+            inception_value = claim_groups["P571"][0].mainsnak.datavalue.value
+            self.inception = {
+                "time": inception_value["time"],
+                "precision": inception_value["precision"],
+            }
+
+        if "P3966" in claim_groups:  # Programming paradigm
+            self.paradigm = map(
+                lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P3966"]
+            )
+
+        if "P7078" in claim_groups:  # Typing discipline
+            self.typing_discipline = map(
+                lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P7078"]
+            )
