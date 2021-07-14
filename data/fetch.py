@@ -56,7 +56,6 @@ def slugify_page_name(page_name):
         .replace("--", "minusminus")
         .replace("/", "-")
         .replace(":", "-")
-        .replace("!", "")
         .replace("′′", "doubleprime")
         .lower()
         .strip()
@@ -64,7 +63,7 @@ def slugify_page_name(page_name):
 
     assert all(
         map(
-            lambda l: l.isalnum() or l == " " or l == "-",
+            lambda l: l.isalnum() or l in [" ", "-", "!"],
             list(page_name),
         )
     )
@@ -100,9 +99,15 @@ if __name__ == "__main__":
             raw_data_list.append(raw_data)
 
     redirect_dict = {}
+    wikidata_dict = {}
     for raw_data in raw_data_list:
-        for redirect in raw_data.wikipedia_page.data["redirects"]:
-            redirect_dict[redirect["title"]] = raw_data.wikipedia_page.data["pageid"]
+        redirect_dict[raw_data.wikipedia_page.data["title"].lower()] = raw_data.id
+
+        if "redirects" in raw_data.wikipedia_page.data:
+            for redirect in raw_data.wikipedia_page.data["redirects"]:
+                redirect_dict[redirect["title"].lower()] = raw_data.id
+
+        wikidata_dict[raw_data.wikidata_item.entity_id] = raw_data.id
 
     for raw_data in raw_data_list:
-        lang = Language(raw_data, raw_data_list)
+        lang = Language(raw_data, redirect_dict, wikidata_dict)
