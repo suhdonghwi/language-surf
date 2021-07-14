@@ -102,7 +102,7 @@ if __name__ == "__main__":
     redirect_dict = {}
     for raw_data in raw_data_list:
         for redirect in raw_data.wikipedia_page.data["redirects"]:
-            redirect["title"]
+            redirect_dict[redirect["title"]] = raw_data.wikipedia_page.data["pageid"]
 
     for raw_data in raw_data_list:
         lang = Language(raw_data, raw_data_list)

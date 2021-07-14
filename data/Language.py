@@ -6,7 +6,7 @@ def preprocess_wikitext(s):
 
 
 def find_page_names(s):
-    links = re.findall(r"\[\[([^\[\]]+))\]\]", s)
+    links = re.findall(r"\[\[([^\[\]]+)\]\]", s)
     page_names = []
     for link in links:
         page_names.append(link.split("|")[0].strip())
@@ -15,7 +15,7 @@ def find_page_names(s):
 
 
 class Language:
-    def __init__(self, raw_data, raw_data_list):
+    def __init__(self, raw_data, redirect_dict):
         self.id = raw_data.id
 
         self.label = raw_data.wikipedia_page.data["label"]
