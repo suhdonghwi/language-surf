@@ -31,7 +31,6 @@ const PixiComponentViewport = PixiComponent("Viewport", {
       worldHeight: props.worldHeight,
       ticker: props.app.ticker,
       interaction: props.app.renderer.plugins.interaction,
-      // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
     });
 
     viewport
@@ -39,7 +38,7 @@ const PixiComponentViewport = PixiComponent("Viewport", {
       .pinch()
       .wheel()
       .moveCenter(new PIXI.Point(0, 0))
-      .clampZoom({ minScale: 0.5, maxScale: 1 })
+      .clampZoom({ minScale: 0.25, maxScale: 2 })
       .decelerate();
 
     return viewport;

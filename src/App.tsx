@@ -4,7 +4,18 @@ import Network from "./components/Network";
 import Viewport from "./components/Viewport";
 
 function App() {
-  const data = [{}, {}, {}, {}, {}];
+  const nodeData = [
+    { index: 0, x: NaN, y: NaN, vx: NaN, vy: NaN },
+    { index: 1, x: NaN, y: NaN, vx: NaN, vy: NaN },
+    { index: 2, x: NaN, y: NaN, vx: NaN, vy: NaN },
+    { index: 3, x: NaN, y: NaN, vx: NaN, vy: NaN },
+    { index: 4, x: NaN, y: NaN, vx: NaN, vy: NaN },
+  ];
+
+  const linkData = [
+    { source: nodeData[0], target: nodeData[1] },
+    { source: nodeData[1], target: nodeData[2] },
+  ];
 
   return (
     <Stage
@@ -18,7 +29,7 @@ function App() {
         worldWidth={window.innerWidth}
         worldHeight={window.innerHeight}
       >
-        <Network data={data} />
+        <Network nodeData={nodeData} linkData={linkData} />
       </Viewport>
     </Stage>
   );
