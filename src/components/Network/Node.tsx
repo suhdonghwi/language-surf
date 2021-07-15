@@ -1,12 +1,9 @@
 import { Graphics } from "@inlet/react-pixi";
 import { useCallback } from "react";
 
-export interface NodeProps {
-  index?: number;
+interface NodeProps {
   x?: number;
   y?: number;
-  vx?: number;
-  vy?: number;
 }
 
 export default function Node({ x, y }: NodeProps) {
