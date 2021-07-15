@@ -193,9 +193,6 @@ def fetch_all_data():
 
 def create_db(con, paradigm_list, typing_list):
     cur = con.cursor()
-    cur.execute("DROP TABLE IF EXISTS paradigm")
-    cur.execute("DROP TABLE IF EXISTS typing")
-    cur.execute("DROP TABLE IF EXISTS language")
 
     cur.execute(
         "CREATE TABLE paradigm (id INTEGER PRIMARY KEY, name TEXT, description TEXT)"
@@ -222,7 +219,6 @@ def create_db(con, paradigm_list, typing_list):
 def create_language(con, language_list):
     cur = con.cursor()
 
-    cur.execute("DROP TABLE IF EXISTS language")
     cur.execute(
         """
         CREATE TABLE language (
@@ -255,7 +251,6 @@ def create_language(con, language_list):
 def create_language_paradigm(con, language_list):
     cur = con.cursor()
 
-    cur.execute("DROP TABLE IF EXISTS language_paradigm")
     cur.execute(
         """
         CREATE TABLE language_paradigm (
@@ -278,7 +273,6 @@ def create_language_paradigm(con, language_list):
 def create_language_typing(con, language_list):
     cur = con.cursor()
 
-    cur.execute("DROP TABLE IF EXISTS language_typing")
     cur.execute(
         """
         CREATE TABLE language_typing (
@@ -298,13 +292,40 @@ def create_language_typing(con, language_list):
     con.commit()
 
 
+def create_influence(con, language_list):
+    cur = con.cursor()
+
+    cur.execute(
+        """
+        CREATE TABLE influence (
+            src INTEGER, 
+            dst INTEGER,
+            PRIMARY KEY (src, dst)
+        )
+        """
+    )
+
+    for lang in language_list:
+        for dst in lang.influenced:
+            cur.execute("INSERT OR IGNORE INTO influence VALUES (?, ?)", (lang.id, dst))
+
+        for src in lang.influenced_by:
+            cur.execute("INSERT OR IGNORE INTO influence VALUES (?, ?)", (src, lang.id))
+
+    con.commit()
+
+
 if __name__ == "__main__":
     (language_list, paradigm_list, typing_list) = fetch_all_data()
 
-    con = sqlite3.connect("./data/db/language.db")
+    db_path = "./data/db/language.db"
+    os.remove(db_path)
+    con = sqlite3.connect(db_path)
 
     create_db(con, paradigm_list, typing_list)
     create_language(con, language_list)
     create_language_paradigm(con, language_list)
     create_language_typing(con, language_list)
+    create_influence(con, language_list)
+
     con.close()
