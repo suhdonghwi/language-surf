@@ -15,7 +15,9 @@ def find_page_names(s):
 
 
 class Language:
-    def __init__(self, raw_data, redirect_dict, wikidata_dict):
+    def __init__(
+        self, raw_data, redirect_dict, wikidata_dict, paradigm_dict, typing_dict
+    ):
         self.id = raw_data.id
 
         self.label = raw_data.wikipedia_page.data["label"]
@@ -57,14 +59,16 @@ class Language:
             }
 
         if "P3966" in claim_groups:  # Programming paradigm
-            self.paradigm = list(
-                map(lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P3966"])
-            )
+            for claim in claim_groups["P3966"]:
+                paradigm_id = claim.mainsnak.datavalue.value["id"]
+                if paradigm_id in paradigm_dict:
+                    self.paradigm.append(paradigm_dict[paradigm_id])
 
         if "P7078" in claim_groups:  # Typing discipline
-            self.typing_discipline = list(
-                map(lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P7078"])
-            )
+            for claim in claim_groups["P7078"]:
+                typing_id = claim.mainsnak.datavalue.value["id"]
+                if typing_id in typing_dict:
+                    self.typing_discipline.append(typing_dict[typing_id])
 
         def wikidata_collect_id(id):
             result = []

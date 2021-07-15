@@ -96,6 +96,10 @@ if __name__ == "__main__":
     lang_list = fetch_list_of_langs()
     print(lang_list)
 
+    # Page does not exist
+    lang_list.remove("Hugo (programming language)")
+    lang_list.remove("Silver (programming language)")
+
     raw_data_list = []
     for (id, lang) in enumerate(lang_list):
         raw_data = fetch_language_raw_data(id, lang)
@@ -141,6 +145,7 @@ if __name__ == "__main__":
 
     paradigm_dict.pop("Q4306983")  # multi-paradigm
     paradigm_dict.pop("Q905156")  # non-structured
+    paradigm_dict.pop("Q380679")  # dynamic programming
     paradigm_dict["Q28920201"] = paradigm_dict[
         "Q28453809"
     ]  # purely functional language = purely functional
@@ -154,40 +159,31 @@ if __name__ == "__main__":
     for (key, value) in paradigm_dict.items():
         print(key, value.name, value.id)
 
-    print(paradigm_id_set)
-    print(typing_id_set)
+    typing_dict_cache_path = "./data/cache/dict/typing_dict.pkl"
+    typing_dict = load_cache(typing_dict_cache_path)
+    if typing_dict is None:
+        typing_dict = {}
+        for typing_id in typing_id_set:
+            item = WikidataItem(get_entity_dict_from_api(typing_id))
+            typing_dict[typing_id] = TypingDiscipline(
+                0, item.get_label(), item.get_description()
+            )
 
+        save_cache(typing_dict_cache_path, typing_dict)
 
-"""
+    typing_dict["Q6495507"] = typing_dict["Q1268978"]  # latent typing = dynamic typing
+    typing_dict.pop("Q66310394")  # typeless
+    typing_dict.pop("Q736866")  # safety typing
+
+    for (id, typing) in enumerate(set(typing_dict.values())):
+        typing.id = id
+
+    for (key, value) in typing_dict.items():
+        print(key, value.name, value.id)
+
     language_list = []
     for raw_data in raw_data_list:
-        language_list.append(Language(raw_data, redirect_dict, wikidata_dict))
-
-    with open("./data/cache/languages_data.pkl", "rb") as f:
-        language_list = pickle.load(f)
-
-    with open("./data/cache/paradigm.pkl", "rb") as f:
-        paradigm_dict = pickle.load(f)
-
-    for 
-
-    typing_dict = {}
-    for (id, typing_id) in enumerate(typing_list):
-        item = WikidataItem(get_entity_dict_from_api(typing_id))
-        typing_discipline = TypingDiscipline(
-            id, item.get_label(), item.get_description()
+        lang = Language(
+            raw_data, redirect_dict, wikidata_dict, paradigm_dict, typing_dict
         )
-
-        typing_dict[typing_id] = typing_discipline
-        print(typing_id, typing_discipline.name)
-
-    with open("./data/cache/typing_discipline.pkl", "wb") as f:
-        pickle.dump(typing_dict, f)
-
-    for (id, paradigm_id) in enumerate(paradigm_list):
-        item = WikidataItem(get_entity_dict_from_api(paradigm_id))
-        paradigm = Paradigm(id, item.get_label(), item.get_description())
-
-        paradigm_dict[paradigm_id] = paradigm
-        print(paradigm_id, paradigm.name)
-"""
+        language_list.append(lang)
