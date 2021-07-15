@@ -52,7 +52,6 @@ def fetch_list_of_langs(page_name="List of programming languages"):
 
 
 def slugify_page_name(page_name):
-    page_name = re.sub(r"\(.*\)", "", page_name)
     page_name = (
         page_name.replace("+", "plus")
         .replace("*", "star")
@@ -67,7 +66,7 @@ def slugify_page_name(page_name):
 
     assert all(
         map(
-            lambda l: l.isalnum() or l in [" ", "-", "!"],
+            lambda l: l.isalnum() or l in [" ", "-", "!", "(", ")"],
             list(page_name),
         )
     )
@@ -199,14 +198,11 @@ def fetch_all_data():
     return (language_list, set(paradigm_dict.values()), set(typing_dict.values()))
 
 
-def create_db(path, paradigm_list, typing_list):
-    con = sqlite3.connect(path)
+def create_db(con, paradigm_list, typing_list):
     cur = con.cursor()
-
     cur.execute("DROP TABLE IF EXISTS paradigm")
     cur.execute("DROP TABLE IF EXISTS typing")
     cur.execute("DROP TABLE IF EXISTS language")
-    con.commit()
 
     cur.execute(
         "CREATE TABLE paradigm (id INTEGER PRIMARY KEY, name TEXT, description TEXT)"
@@ -228,10 +224,47 @@ def create_db(path, paradigm_list, typing_list):
         )
 
     con.commit()
-    con.close()
+
+
+def insert_languages(con, language_list):
+    cur = con.cursor()
+
+    cur.execute("DROP TABLE IF EXISTS language")
+    cur.execute(
+        """
+        CREATE TABLE language (
+            id INTEGER PRIMARY KEY, 
+            label TEXT NOT NULL, 
+            description TEXT, 
+            wikipedia_pageid INTEGER, 
+            inception TEXT, 
+            inception_precision INTEGER
+        )
+        """
+    )
+
+    for lang in language_list:
+        print(lang.label)
+        cur.execute(
+            "INSERT INTO language VALUES (?, ?, ?, ?, ?, ?)",
+            (
+                lang.id,
+                lang.label,
+                lang.description,
+                lang.wikipedia_pageid,
+                lang.inception["time"] if lang.inception is not None else None,
+                lang.inception["precision"] if lang.inception is not None else None,
+            ),
+        )
+
+    con.commit()
 
 
 if __name__ == "__main__":
     (language_list, paradigm_list, typing_list) = fetch_all_data()
 
-    # create_db("./data/db/language.db", paradigm_list, typing_list)
+    con = sqlite3.connect("./data/db/language.db")
+
+    create_db(con, paradigm_list, typing_list)
+    insert_languages(con, language_list)
+    con.close()

@@ -47,6 +47,7 @@ exclude_list = [
     "Uniface (programming language)",
     "X++",
     "XC (programming language)",
+    "Winbatch"
     # Too little information
     "Accent (programming language)",
     "Adenine (programming language)",
