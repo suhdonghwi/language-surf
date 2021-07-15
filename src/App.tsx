@@ -1,5 +1,7 @@
 import { Stage } from "@inlet/react-pixi";
+
 import Network from "./components/Network";
+import Viewport from "./components/Viewport";
 
 function App() {
   const data = [{}, {}, {}, {}, {}];
@@ -10,7 +12,14 @@ function App() {
       height={window.innerHeight}
       options={{ resizeTo: window, backgroundColor: 0xffffff }}
     >
-      <Network data={data} />
+      <Viewport
+        screenWidth={window.innerWidth}
+        screenHeight={window.innerHeight}
+        worldWidth={window.innerWidth}
+        worldHeight={window.innerHeight}
+      >
+        <Network data={data} />
+      </Viewport>
     </Stage>
   );
 }
