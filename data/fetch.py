@@ -41,7 +41,6 @@ def fetch_list_of_langs(page_name="List of programming languages"):
     if cache is None:
         page = wptools.page(page_name)
         data = page.get().data["links"]
-        print(data)
         data = list(filter(lambda l: is_valid_page_name(l), data))
 
         save_cache(cache_path, data)
@@ -159,9 +158,6 @@ def fetch_all_data():
     for (id, paradigm) in enumerate(set(paradigm_dict.values())):
         paradigm.id = id
 
-    for (key, value) in paradigm_dict.items():
-        print(key, value.name, value.id)
-
     typing_dict_cache_path = "./data/cache/dict/typing_dict.pkl"
     typing_dict = load_cache(typing_dict_cache_path)
     if typing_dict is None:
@@ -184,9 +180,6 @@ def fetch_all_data():
 
     for (id, typing) in enumerate(set(typing_dict.values())):
         typing.id = id
-
-    for (key, value) in typing_dict.items():
-        print(key, value.name, value.id)
 
     language_list = []
     for raw_data in raw_data_list:
@@ -226,7 +219,7 @@ def create_db(con, paradigm_list, typing_list):
     con.commit()
 
 
-def insert_languages(con, language_list):
+def create_language(con, language_list):
     cur = con.cursor()
 
     cur.execute("DROP TABLE IF EXISTS language")
@@ -244,7 +237,6 @@ def insert_languages(con, language_list):
     )
 
     for lang in language_list:
-        print(lang.label)
         cur.execute(
             "INSERT INTO language VALUES (?, ?, ?, ?, ?, ?)",
             (
@@ -260,11 +252,36 @@ def insert_languages(con, language_list):
     con.commit()
 
 
+def create_language_paradigm(con, language_list):
+    cur = con.cursor()
+
+    cur.execute("DROP TABLE IF EXISTS language_paradigm")
+    cur.execute(
+        """
+        CREATE TABLE language_paradigm (
+            lang_id INTEGER, 
+            paradigm_id INTEGER,
+            PRIMARY KEY (lang_id, paradigm_id)
+        )
+        """
+    )
+
+    for lang in language_list:
+        for paradigm in lang.paradigm:
+            print(lang.id, paradigm.id)
+            cur.execute(
+                "INSERT INTO language_paradigm VALUES (?, ?)", (lang.id, paradigm.id)
+            )
+
+    con.commit()
+
+
 if __name__ == "__main__":
     (language_list, paradigm_list, typing_list) = fetch_all_data()
 
     con = sqlite3.connect("./data/db/language.db")
 
     create_db(con, paradigm_list, typing_list)
-    insert_languages(con, language_list)
+    create_language(con, language_list)
+    create_language_paradigm(con, language_list)
     con.close()

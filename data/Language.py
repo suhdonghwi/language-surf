@@ -48,8 +48,8 @@ class Language:
         claim_groups = raw_data.wikidata_item.get_claim_groups()
 
         self.inception = None
-        self.paradigm = []
-        self.typing_discipline = []
+        self.paradigm = set()
+        self.typing_discipline = set()
 
         if "P571" in claim_groups:  # Inception
             inception_value = claim_groups["P571"][0].mainsnak.datavalue.value
@@ -62,13 +62,13 @@ class Language:
             for claim in claim_groups["P3966"]:
                 paradigm_id = claim.mainsnak.datavalue.value["id"]
                 if paradigm_id in paradigm_dict:
-                    self.paradigm.append(paradigm_dict[paradigm_id])
+                    self.paradigm.add(paradigm_dict[paradigm_id])
 
         if "P7078" in claim_groups:  # Typing discipline
             for claim in claim_groups["P7078"]:
                 typing_id = claim.mainsnak.datavalue.value["id"]
                 if typing_id in typing_dict:
-                    self.typing_discipline.append(typing_dict[typing_id])
+                    self.typing_discipline.add(typing_dict[typing_id])
 
         def wikidata_collect_id(id):
             result = []
