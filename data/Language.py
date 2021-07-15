@@ -46,8 +46,8 @@ class Language:
         claim_groups = raw_data.wikidata_item.get_claim_groups()
 
         self.inception = None
-        self.paradigm = None
-        self.typing_discipline = None
+        self.paradigm = []
+        self.typing_discipline = []
 
         if "P571" in claim_groups:  # Inception
             inception_value = claim_groups["P571"][0].mainsnak.datavalue.value
@@ -57,13 +57,13 @@ class Language:
             }
 
         if "P3966" in claim_groups:  # Programming paradigm
-            self.paradigm = map(
-                lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P3966"]
+            self.paradigm = list(
+                map(lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P3966"])
             )
 
         if "P7078" in claim_groups:  # Typing discipline
-            self.typing_discipline = map(
-                lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P7078"]
+            self.typing_discipline = list(
+                map(lambda x: x.mainsnak.datavalue.value["id"], claim_groups["P7078"])
             )
 
         def wikidata_collect_id(id):
@@ -79,7 +79,3 @@ class Language:
 
         self.influenced_by.update(wikidata_collect_id("P144"))
         self.influenced_by.update(wikidata_collect_id("P737"))
-
-        print(self.label)
-        print(self.influenced_by)
-        print(self.influenced)

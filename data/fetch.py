@@ -8,7 +8,10 @@ from qwikidata.linked_data_interface import get_entity_dict_from_api
 
 from exclude_list import exclude_list
 from language_raw_data import LanguageRawData
+
 from language import Language
+from paradigm import Paradigm
+from typing_discipline import TypingDiscipline
 
 
 def load_cache(path):
@@ -109,5 +112,8 @@ if __name__ == "__main__":
 
         wikidata_dict[raw_data.wikidata_item.entity_id] = raw_data.id
 
-    for raw_data in raw_data_list:
-        lang = Language(raw_data, redirect_dict, wikidata_dict)
+    with open("./data/cache/languages_data.pkl", "rb") as f:
+        language_list = pickle.load(f)
+
+    for lang in language_list:
+        print(lang.label, lang.paradigm, lang.typing_discipline)
