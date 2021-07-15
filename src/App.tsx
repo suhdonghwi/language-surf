@@ -1,19 +1,16 @@
-import { Stage, Graphics } from "@inlet/react-pixi";
+import { Stage } from "@inlet/react-pixi";
+import Network from "./components/Network";
 
 function App() {
+  const data = [{}, {}, {}, {}, {}];
+
   return (
     <Stage
       width={window.innerWidth}
       height={window.innerHeight}
       options={{ resizeTo: window, backgroundColor: 0xffffff }}
     >
-      <Graphics
-        draw={(g) => {
-          g.beginFill(0xff0000);
-          g.drawRect(0, 0, 100, 100);
-          g.endFill();
-        }}
-      />
+      <Network data={data} />
     </Stage>
   );
 }
