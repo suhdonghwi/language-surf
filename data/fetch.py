@@ -268,9 +268,31 @@ def create_language_paradigm(con, language_list):
 
     for lang in language_list:
         for paradigm in lang.paradigm:
-            print(lang.id, paradigm.id)
             cur.execute(
                 "INSERT INTO language_paradigm VALUES (?, ?)", (lang.id, paradigm.id)
+            )
+
+    con.commit()
+
+
+def create_language_typing(con, language_list):
+    cur = con.cursor()
+
+    cur.execute("DROP TABLE IF EXISTS language_typing")
+    cur.execute(
+        """
+        CREATE TABLE language_typing (
+            lang_id INTEGER, 
+            typing_id INTEGER,
+            PRIMARY KEY (lang_id, typing_id)
+        )
+        """
+    )
+
+    for lang in language_list:
+        for typing in lang.typing_discipline:
+            cur.execute(
+                "INSERT INTO language_typing VALUES (?, ?)", (lang.id, typing.id)
             )
 
     con.commit()
@@ -284,4 +306,5 @@ if __name__ == "__main__":
     create_db(con, paradigm_list, typing_list)
     create_language(con, language_list)
     create_language_paradigm(con, language_list)
+    create_language_typing(con, language_list)
     con.close()
