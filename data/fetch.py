@@ -92,16 +92,15 @@ def fetch_language_raw_data(id, page_name):
         return cache
 
 
-if __name__ == "__main__":
-    lang_list = fetch_list_of_langs()
-    print(lang_list)
+def fetch_all_data():
+    page_name_list = fetch_list_of_langs()
 
     # Page does not exist
-    lang_list.remove("Hugo (programming language)")
-    lang_list.remove("Silver (programming language)")
+    page_name_list.remove("Hugo (programming language)")
+    page_name_list.remove("Silver (programming language)")
 
     raw_data_list = []
-    for (id, lang) in enumerate(lang_list):
+    for (id, lang) in enumerate(page_name_list):
         raw_data = fetch_language_raw_data(id, lang)
         if raw_data is not None:
             raw_data_list.append(raw_data)
@@ -146,12 +145,17 @@ if __name__ == "__main__":
     paradigm_dict.pop("Q4306983")  # multi-paradigm
     paradigm_dict.pop("Q905156")  # non-structured
     paradigm_dict.pop("Q380679")  # dynamic programming
+    paradigm_dict.pop("Q609588")  # component-based software engineering
+    paradigm_dict.pop("Q4117397")
     paradigm_dict["Q28920201"] = paradigm_dict[
         "Q28453809"
     ]  # purely functional language = purely functional
     paradigm_dict["Q28922858"] = paradigm_dict[
         "Q5127844"
     ]  # class-based language = class-based
+    paradigm_dict["Q1931693"] = paradigm_dict[
+        "Q232661"
+    ]  # parallel programming = parallel computing
 
     for (id, paradigm) in enumerate(set(paradigm_dict.values())):
         paradigm.id = id
@@ -172,8 +176,12 @@ if __name__ == "__main__":
         save_cache(typing_dict_cache_path, typing_dict)
 
     typing_dict["Q6495507"] = typing_dict["Q1268978"]  # latent typing = dynamic typing
+    typing_dict["Q997433"] = typing_dict[
+        "Q56232424"
+    ]  # dependent type = dependently typed programming
     typing_dict.pop("Q66310394")  # typeless
     typing_dict.pop("Q736866")  # safety typing
+    typing_dict.pop("Q180868")  # prototype-based programming
 
     for (id, typing) in enumerate(set(typing_dict.values())):
         typing.id = id
@@ -187,3 +195,43 @@ if __name__ == "__main__":
             raw_data, redirect_dict, wikidata_dict, paradigm_dict, typing_dict
         )
         language_list.append(lang)
+
+    return (language_list, set(paradigm_dict.values()), set(typing_dict.values()))
+
+
+def create_db(path, paradigm_list, typing_list):
+    con = sqlite3.connect(path)
+    cur = con.cursor()
+
+    cur.execute("DROP TABLE IF EXISTS paradigm")
+    cur.execute("DROP TABLE IF EXISTS typing")
+    cur.execute("DROP TABLE IF EXISTS language")
+    con.commit()
+
+    cur.execute(
+        "CREATE TABLE paradigm (id INTEGER PRIMARY KEY, name TEXT, description TEXT)"
+    )
+    for paradigm in paradigm_list:
+        cur.execute(
+            "INSERT INTO paradigm VALUES (?, ?, ?)",
+            (paradigm.id, paradigm.name, paradigm.description),
+        )
+
+    cur.execute(
+        "CREATE TABLE typing (id INTEGER PRIMARY KEY, name TEXT, description TEXT)"
+    )
+
+    for typing in typing_list:
+        cur.execute(
+            "INSERT INTO typing VALUES (?, ?, ?)",
+            (typing.id, typing.name, typing.description),
+        )
+
+    con.commit()
+    con.close()
+
+
+if __name__ == "__main__":
+    (language_list, paradigm_list, typing_list) = fetch_all_data()
+
+    # create_db("./data/db/language.db", paradigm_list, typing_list)
