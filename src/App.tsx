@@ -4,26 +4,23 @@ import Network from "./components/Network";
 import Viewport from "./components/Viewport";
 
 import { useMemo } from "react";
-import { languageData, influenceData } from "./data/Language";
+import Language, { languageData, influenceData } from "./data/Language";
+import { DirectedGraph } from "graphology";
 
 function App() {
-  const nodeData = useMemo(
-    () =>
-      Object.entries(languageData).map(([id, data]) => ({
-        index: Number(id),
-        x: NaN,
-        y: NaN,
-      })),
-    []
-  );
-  const linkData = useMemo(
-    () =>
-      influenceData.map(({ source, target }) => ({
-        source,
-        target,
-      })),
-    []
-  );
+  const graph = useMemo(() => {
+    const g = new DirectedGraph<Language>();
+
+    for (const [id, data] of Object.entries(languageData)) {
+      g.addNode(id, data);
+    }
+
+    for (const { source, target } of influenceData) {
+      g.addEdge(source, target);
+    }
+
+    return g;
+  }, []);
 
   return (
     <Stage
@@ -37,7 +34,7 @@ function App() {
         worldWidth={window.innerWidth}
         worldHeight={window.innerHeight}
       >
-        <Network nodeData={nodeData} linkData={linkData} />
+        <Network graph={graph} />
       </Viewport>
     </Stage>
   );

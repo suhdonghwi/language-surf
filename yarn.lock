@@ -5706,6 +5706,25 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
+graphology-layout@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/graphology-layout/-/graphology-layout-0.4.0.tgz#2e9049b92a64a8de6f140a52e9c734a443fa5d8e"
+  integrity sha512-mfb6HFCeZA0ezLkS16weUvwCKMhf5qI2Feyog/gSr3WtoqT9Xfr+xoRmrUrRRG1ICHZRP08FOSSj3Bf4TP4unw==
+  dependencies:
+    graphology-utils "^1.8.0"
+    lodash "^4.17.20"
+    pandemonium "^1.5.0"
+
+graphology-types@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/graphology-types/-/graphology-types-0.19.2.tgz#bb5577e1883b8b23af97f1ba04cb29191b18e502"
+  integrity sha512-1JO26jHK4rqaXq9kBxH5dOc2AIrOxMA382m+W6ccJMLKoj/NYXVEB0I8nlIRUKNxM+oUsL0GjxNJZAbJp2WNwg==
+
+graphology-utils@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/graphology-utils/-/graphology-utils-1.8.0.tgz#41315c468656e2a3e028a76468bbc2fbe42b0145"
+  integrity sha512-Pa7SW30OMm8fVtyH49b3GJ/uxlMHGfXly50wIhlcc7ZoX9ahZa7sPBz+obo4WZClrRV6wh3tIu0GJoI42eao1A==
+
 graphology@^0.20.0:
   version "0.20.0"
   resolved "https://registry.yarnpkg.com/graphology/-/graphology-0.20.0.tgz#e29f7a1448852dfc7195646241f336b10127997a"
@@ -8201,6 +8220,11 @@ pako@~1.0.5:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
+
+pandemonium@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/pandemonium/-/pandemonium-1.5.0.tgz#93f35af555de1420022b341e730215c51c725be3"
+  integrity sha512-9PU9fy93rJhZHLMjX+4M1RwZPEYl6g7DdWKGmGNhkgBZR5+tOBVExNZc00kzdEGMxbaAvWdQy9MqGAScGwYlcA==
 
 parallel-transform@^1.1.0:
   version "1.2.0"
