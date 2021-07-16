@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Container } from "@inlet/react-pixi";
 
 import Graph from "graphology";
-import { circlepack } from "graphology-layout";
+import { random } from "graphology-layout";
 
 import Node from "./Node";
 import Link from "./Link";
@@ -13,8 +13,19 @@ interface NetworkProps {
 
 export default function Network({ graph }: NetworkProps) {
   useMemo(() => {
-    circlepack.assign(graph, { scale: 30 });
-    console.log(graph.getNodeAttributes("0"));
+    random.assign(graph, { scale: 500, center: 0 });
+
+    /*forceAtlas2.assign(graph, {
+      iterations: 50,
+      settings: {
+        gravity: 0.5,
+        adjustSizes: true,
+        barnesHutOptimize: true,
+      },
+    });
+    noverlap.assign(graph, {
+      maxIterations: 100,
+    });*/
   }, [graph]);
 
   return (

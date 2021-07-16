@@ -5706,6 +5706,20 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
+graphology-layout-forceatlas2@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/graphology-layout-forceatlas2/-/graphology-layout-forceatlas2-0.6.1.tgz#eefaecba56e078724ba242821a73be24e33aec92"
+  integrity sha512-/9ayuwOokigtOjVotrF27k98zUErSgTOxZwcgqiHprf0C6rVMsckRgg+gCHEmeoxei+MBPrznzh8qGJVpmZxgQ==
+  dependencies:
+    graphology-utils "^2.1.0"
+
+graphology-layout-noverlap@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/graphology-layout-noverlap/-/graphology-layout-noverlap-0.3.0.tgz#671a9ea3f52950c6284d33fd91493683f14f5b87"
+  integrity sha512-cZixKw9m2vnnVxnyHbBFJysVXKt5ZYITURjhGx6yE6gywI3Yy7YmTafkh8115QtCHdEzJRVRCq9Upto9HGqCvg==
+  dependencies:
+    graphology-utils "^1.8.0"
+
 graphology-layout@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/graphology-layout/-/graphology-layout-0.4.0.tgz#2e9049b92a64a8de6f140a52e9c734a443fa5d8e"
@@ -5724,6 +5738,11 @@ graphology-utils@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/graphology-utils/-/graphology-utils-1.8.0.tgz#41315c468656e2a3e028a76468bbc2fbe42b0145"
   integrity sha512-Pa7SW30OMm8fVtyH49b3GJ/uxlMHGfXly50wIhlcc7ZoX9ahZa7sPBz+obo4WZClrRV6wh3tIu0GJoI42eao1A==
+
+graphology-utils@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/graphology-utils/-/graphology-utils-2.1.1.tgz#bebe050a1290c67133a45c9de2d2a36ad2d25f8c"
+  integrity sha512-ujeOQJQF64qIwepLjJqb91P3jYFsjzyEZPDSwDx8RG34iNKqmDogJRH0lawzvietaJjFKzwegy1ft/g5PTm1zA==
 
 graphology@^0.20.0:
   version "0.20.0"

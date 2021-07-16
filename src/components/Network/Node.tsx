@@ -10,7 +10,7 @@ export default function Node({ x, y }: NodeProps) {
   const draw = useCallback((g) => {
     g.clear();
     g.beginFill(0);
-    g.drawCircle(0, 0, 10);
+    g.drawCircle(0, 0, 2);
     g.endFill();
   }, []);
 

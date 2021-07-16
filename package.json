@@ -15,6 +15,8 @@
     "d3-force": "^3.0.0",
     "graphology": "^0.20.0",
     "graphology-layout": "^0.4.0",
+    "graphology-layout-forceatlas2": "^0.6.1",
+    "graphology-layout-noverlap": "^0.3.0",
     "graphology-types": "^0.19.2",
     "pixi-viewport": "^4.31.0",
     "pixi.js": "^6.0.4",
