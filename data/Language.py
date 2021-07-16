@@ -21,7 +21,7 @@ class Language:
         self.id = raw_data.id
 
         self.label = raw_data.wikipedia_page.data["label"]
-        self.description = preprocess_wikitext(raw_data.wikipedia_page.data["extext"])
+        # self.description = preprocess_wikitext(raw_data.wikipedia_page.data["extext"])
         self.wikipedia_pageid = raw_data.wikipedia_page.data["pageid"]
 
         def wikipedia_collect_id(page_names):

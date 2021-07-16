@@ -2,7 +2,6 @@ import os.path
 import wptools
 import pickle
 import json
-import sqlite3
 
 from qwikidata.entity import WikidataItem
 from qwikidata.linked_data_interface import get_entity_dict_from_api
@@ -221,7 +220,6 @@ def serialize_language(language_list):
     for lang in language_list:
         result[lang.id] = {
             "name": lang.label,
-            "description": lang.description,
             "wikipedia_pageid": lang.wikipedia_pageid,
             "inception": lang.inception,
             "paradigm": list(map(lambda p: p.id, lang.paradigm)),

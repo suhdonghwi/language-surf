@@ -3,19 +3,20 @@ import { Stage } from "@inlet/react-pixi";
 import Network from "./components/Network";
 import Viewport from "./components/Viewport";
 
-function App() {
-  const nodeData = [
-    { index: 0, x: NaN, y: NaN },
-    { index: 1, x: NaN, y: NaN },
-    { index: 2, x: NaN, y: NaN },
-    { index: 3, x: NaN, y: NaN },
-    { index: 4, x: NaN, y: NaN },
-  ];
+import { useMemo } from "react";
+import { languageData } from "./data/Language";
 
-  const linkData = [
-    { source: nodeData[0], target: nodeData[1] },
-    { source: nodeData[1], target: nodeData[2] },
-  ];
+function App() {
+  const nodeData = useMemo(
+    () =>
+      Object.entries(languageData).map(([id, data]) => ({
+        index: Number(id),
+        x: NaN,
+        y: NaN,
+      })),
+    []
+  );
+  const linkData: any = [];
 
   return (
     <Stage

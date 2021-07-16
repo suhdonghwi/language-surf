@@ -31,7 +31,6 @@ export default function Network({ nodeData, linkData }: NetworkProps) {
     d3.forceSimulation(nodeData)
       .force("collide", d3.forceCollide(10))
       .force("charge", d3.forceManyBody())
-      .force("link", d3.forceLink(linkData))
       .on("tick", () => {
         setNodes([...nodeData]);
         setLinks([...linkData]);
