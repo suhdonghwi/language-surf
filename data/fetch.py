@@ -1,7 +1,7 @@
 import os.path
 import wptools
 import pickle
-import re
+import json
 import sqlite3
 
 from qwikidata.entity import WikidataItem
@@ -191,141 +191,74 @@ def fetch_all_data():
     return (language_list, set(paradigm_dict.values()), set(typing_dict.values()))
 
 
-def create_db(con, paradigm_list, typing_list):
-    cur = con.cursor()
+def serialize_paradigm(paradigm_list):
+    result = {}
 
-    cur.execute(
-        "CREATE TABLE paradigm (id INTEGER PRIMARY KEY, name TEXT, description TEXT)"
-    )
     for paradigm in paradigm_list:
-        cur.execute(
-            "INSERT INTO paradigm VALUES (?, ?, ?)",
-            (paradigm.id, paradigm.name, paradigm.description),
-        )
+        result[paradigm.id] = {
+            "name": paradigm.name,
+            "description": paradigm.description,
+        }
 
-    cur.execute(
-        "CREATE TABLE typing (id INTEGER PRIMARY KEY, name TEXT, description TEXT)"
-    )
+    return json.dumps(result)
+
+
+def serialize_typing(typing_list):
+    result = {}
 
     for typing in typing_list:
-        cur.execute(
-            "INSERT INTO typing VALUES (?, ?, ?)",
-            (typing.id, typing.name, typing.description),
-        )
+        result[typing.id] = {
+            "name": typing.name,
+            "description": typing.description,
+        }
 
-    con.commit()
+    return json.dumps(result)
 
 
-def create_language(con, language_list):
-    cur = con.cursor()
-
-    cur.execute(
-        """
-        CREATE TABLE language (
-            id INTEGER PRIMARY KEY, 
-            label TEXT NOT NULL, 
-            description TEXT, 
-            wikipedia_pageid INTEGER, 
-            inception TEXT, 
-            inception_precision INTEGER
-        )
-        """
-    )
+def serialize_language(language_list):
+    result = {}
 
     for lang in language_list:
-        cur.execute(
-            "INSERT INTO language VALUES (?, ?, ?, ?, ?, ?)",
-            (
-                lang.id,
-                lang.label,
-                lang.description,
-                lang.wikipedia_pageid,
-                lang.inception["time"] if lang.inception is not None else None,
-                lang.inception["precision"] if lang.inception is not None else None,
-            ),
-        )
+        result[lang.id] = {
+            "name": lang.label,
+            "description": lang.description,
+            "wikipedia_pageid": lang.wikipedia_pageid,
+            "inception": lang.inception,
+            "paradigm": list(map(lambda p: p.id, lang.paradigm)),
+            "typing": list(map(lambda t: t.id, lang.typing_discipline)),
+        }
 
-    con.commit()
+    return json.dumps(result)
 
 
-def create_language_paradigm(con, language_list):
-    cur = con.cursor()
-
-    cur.execute(
-        """
-        CREATE TABLE language_paradigm (
-            lang_id INTEGER, 
-            paradigm_id INTEGER,
-            PRIMARY KEY (lang_id, paradigm_id)
-        )
-        """
-    )
+def serialize_influence(language_list):
+    temp = set()
 
     for lang in language_list:
-        for paradigm in lang.paradigm:
-            cur.execute(
-                "INSERT INTO language_paradigm VALUES (?, ?)", (lang.id, paradigm.id)
-            )
+        for source in lang.influenced_by:
+            temp.add((source, lang.id))
 
-    con.commit()
+        for target in lang.influenced:
+            temp.add((lang.id, target))
 
+    result = []
+    for (source, target) in temp:
+        result.append({"source": source, "target": target})
 
-def create_language_typing(con, language_list):
-    cur = con.cursor()
-
-    cur.execute(
-        """
-        CREATE TABLE language_typing (
-            lang_id INTEGER, 
-            typing_id INTEGER,
-            PRIMARY KEY (lang_id, typing_id)
-        )
-        """
-    )
-
-    for lang in language_list:
-        for typing in lang.typing_discipline:
-            cur.execute(
-                "INSERT INTO language_typing VALUES (?, ?)", (lang.id, typing.id)
-            )
-
-    con.commit()
-
-
-def create_influence(con, language_list):
-    cur = con.cursor()
-
-    cur.execute(
-        """
-        CREATE TABLE influence (
-            src INTEGER, 
-            dst INTEGER,
-            PRIMARY KEY (src, dst)
-        )
-        """
-    )
-
-    for lang in language_list:
-        for dst in lang.influenced:
-            cur.execute("INSERT OR IGNORE INTO influence VALUES (?, ?)", (lang.id, dst))
-
-        for src in lang.influenced_by:
-            cur.execute("INSERT OR IGNORE INTO influence VALUES (?, ?)", (src, lang.id))
-
-    con.commit()
+    return json.dumps(result)
 
 
 if __name__ == "__main__":
     (language_list, paradigm_list, typing_list) = fetch_all_data()
 
-    db_path = "./data/db/language.db"
-    os.remove(db_path)
-    con = sqlite3.connect(db_path)
+    with open("./data/result/paradigm.json", "w") as f:
+        f.write(serialize_paradigm(paradigm_list))
 
-    create_db(con, paradigm_list, typing_list)
-    create_language(con, language_list)
-    create_language_paradigm(con, language_list)
-    create_language_typing(con, language_list)
-    create_influence(con, language_list)
+    with open("./data/result/typing.json", "w") as f:
+        f.write(serialize_typing(typing_list))
 
-    con.close()
+    with open("./data/result/language.json", "w") as f:
+        f.write(serialize_language(language_list))
+
+    with open("./data/result/influence.json", "w") as f:
+        f.write(serialize_influence(language_list))
