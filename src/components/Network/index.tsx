@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import * as d3 from "d3-force";
-import { Container, Graphics } from "@inlet/react-pixi";
+import { Container } from "@inlet/react-pixi";
 
 import Node from "./Node";
+import Link from "./Link";
 
 interface NodeData {
   index: number;
@@ -40,13 +41,12 @@ export default function Network({ nodeData, linkData }: NetworkProps) {
   return (
     <Container>
       {links.map((link, i) => (
-        <Graphics
-          draw={(g) => {
-            g.clear();
-            g.lineStyle(3, 0)
-              .moveTo(link.source.x, link.source.y)
-              .lineTo(link.target.x, link.target.y);
-          }}
+        <Link
+          key={i}
+          sourceX={link.source.x}
+          sourceY={link.source.y}
+          targetX={link.target.x}
+          targetY={link.target.y}
         />
       ))}
       {nodes.map((node, i) => (
