@@ -9,8 +9,8 @@ interface NodeData {
   index: number;
   x: number;
   y: number;
-  vx: number;
-  vy: number;
+  vx?: number;
+  vy?: number;
 }
 
 interface LinkData {

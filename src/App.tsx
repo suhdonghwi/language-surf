@@ -5,11 +5,11 @@ import Viewport from "./components/Viewport";
 
 function App() {
   const nodeData = [
-    { index: 0, x: NaN, y: NaN, vx: NaN, vy: NaN },
-    { index: 1, x: NaN, y: NaN, vx: NaN, vy: NaN },
-    { index: 2, x: NaN, y: NaN, vx: NaN, vy: NaN },
-    { index: 3, x: NaN, y: NaN, vx: NaN, vy: NaN },
-    { index: 4, x: NaN, y: NaN, vx: NaN, vy: NaN },
+    { index: 0, x: NaN, y: NaN },
+    { index: 1, x: NaN, y: NaN },
+    { index: 2, x: NaN, y: NaN },
+    { index: 3, x: NaN, y: NaN },
+    { index: 4, x: NaN, y: NaN },
   ];
 
   const linkData = [
