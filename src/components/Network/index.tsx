@@ -3,6 +3,8 @@ import { Container } from "@inlet/react-pixi";
 
 import Graph from "graphology";
 import { random } from "graphology-layout";
+import forceAtlas2 from "graphology-layout-forceatlas2";
+import noverlap from "graphology-layout-noverlap";
 
 import Node from "./Node";
 import Link from "./Link";
@@ -13,19 +15,18 @@ interface NetworkProps {
 
 export default function Network({ graph }: NetworkProps) {
   useMemo(() => {
-    random.assign(graph, { scale: 500, center: 0 });
-
-    /*forceAtlas2.assign(graph, {
+    random.assign(graph, { scale: 700, center: 0 });
+    forceAtlas2.assign(graph, {
       iterations: 50,
       settings: {
-        gravity: 0.5,
+        gravity: 1,
         adjustSizes: true,
         barnesHutOptimize: true,
       },
     });
     noverlap.assign(graph, {
-      maxIterations: 100,
-    });*/
+      maxIterations: 50,
+    });
   }, [graph]);
 
   return (
@@ -45,6 +46,7 @@ export default function Network({ graph }: NetworkProps) {
           key={key}
           x={graph.getNodeAttribute(key, "x")}
           y={graph.getNodeAttribute(key, "y")}
+          radius={2 + 0.1 * graph.outDegree(key)}
         />
       ))}
     </Container>
