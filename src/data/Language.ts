@@ -1,4 +1,5 @@
 import languageJson from "./json/language.json";
+import influenceJson from "./json/influence.json";
 
 export default interface Language {
   name: string;
@@ -25,3 +26,6 @@ for (const [id, raw_data] of Object.entries(languageJson)) {
           },
   };
 }
+
+export const influenceData: { source: number; target: number }[] =
+  influenceJson;

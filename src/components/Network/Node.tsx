@@ -9,7 +9,7 @@ interface NodeProps {
 export default function Node({ x, y }: NodeProps) {
   const draw = useCallback((g) => {
     g.clear();
-    g.beginFill(0xff0000);
+    g.beginFill(0);
     g.drawCircle(0, 0, 10);
     g.endFill();
   }, []);

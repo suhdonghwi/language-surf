@@ -14,8 +14,8 @@ interface NodeData {
 }
 
 interface LinkData {
-  source: NodeData;
-  target: NodeData;
+  source: number;
+  target: number;
 }
 
 interface NetworkProps {
@@ -25,12 +25,13 @@ interface NetworkProps {
 
 export default function Network({ nodeData, linkData }: NetworkProps) {
   const [nodes, setNodes] = useState<NodeData[]>([]);
-  const [links, setLinks] = useState<LinkData[]>([]);
+  const [links, setLinks] = useState<d3.SimulationLinkDatum<NodeData>[]>([]);
 
   useEffect(() => {
     d3.forceSimulation(nodeData)
       .force("collide", d3.forceCollide(10))
       .force("charge", d3.forceManyBody())
+      .force("link", d3.forceLink(linkData))
       .on("tick", () => {
         setNodes([...nodeData]);
         setLinks([...linkData]);
@@ -42,10 +43,10 @@ export default function Network({ nodeData, linkData }: NetworkProps) {
       {links.map((link, i) => (
         <Link
           key={i}
-          sourceX={link.source.x}
-          sourceY={link.source.y}
-          targetX={link.target.x}
-          targetY={link.target.y}
+          sourceX={(link.source as NodeData).x}
+          sourceY={(link.source as NodeData).y}
+          targetX={(link.target as NodeData).x}
+          targetY={(link.target as NodeData).y}
         />
       ))}
       {nodes.map((node, i) => (

@@ -4,7 +4,7 @@ import Network from "./components/Network";
 import Viewport from "./components/Viewport";
 
 import { useMemo } from "react";
-import { languageData } from "./data/Language";
+import { languageData, influenceData } from "./data/Language";
 
 function App() {
   const nodeData = useMemo(
@@ -16,7 +16,14 @@ function App() {
       })),
     []
   );
-  const linkData: any = [];
+  const linkData = useMemo(
+    () =>
+      influenceData.map(({ source, target }) => ({
+        source,
+        target,
+      })),
+    []
+  );
 
   return (
     <Stage
