@@ -54,7 +54,7 @@ class Language:
         if "P571" in claim_groups:  # Inception
             inception_value = claim_groups["P571"][0].mainsnak.datavalue.value
             self.inception = {
-                "time": inception_value["time"],
+                "time": inception_value["time"].replace("-00-00", "-01-01"),
                 "precision": inception_value["precision"],
             }
 

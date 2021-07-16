@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Container } from "@inlet/react-pixi";
 
 import Graph from "graphology";

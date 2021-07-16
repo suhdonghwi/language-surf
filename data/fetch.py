@@ -249,14 +249,15 @@ def serialize_influence(language_list):
 if __name__ == "__main__":
     (language_list, paradigm_list, typing_list) = fetch_all_data()
 
-    with open("./data/result/paradigm.json", "w") as f:
+    basePath = "./src/data/json/"
+    with open(basePath + "paradigm.json", "w") as f:
         f.write(serialize_paradigm(paradigm_list))
 
-    with open("./data/result/typing.json", "w") as f:
+    with open(basePath + "typing.json", "w") as f:
         f.write(serialize_typing(typing_list))
 
-    with open("./data/result/language.json", "w") as f:
+    with open(basePath + "language.json", "w") as f:
         f.write(serialize_language(language_list))
 
-    with open("./data/result/influence.json", "w") as f:
+    with open(basePath + "influence.json", "w") as f:
         f.write(serialize_influence(language_list))
