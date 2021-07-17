@@ -1,14 +1,11 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 
 import Language, { languageData, influenceData } from "./data/Language";
-import Sigma from "sigma";
 
 import { DirectedGraph } from "graphology";
-import { random } from "graphology-layout";
+import Network from "./components/Network";
 
 function App() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const graph = useMemo(() => {
     const g = new DirectedGraph<Language>();
 
@@ -21,20 +18,13 @@ function App() {
     }
 
     g.forEachNode((key) => {
-      g.setNodeAttribute(key, "size", 5 + 0.5 * g.outDegree(key));
+      g.setNodeAttribute(key, "size", 3 + 0.1 * g.outDegree(key));
     });
 
     return g;
   }, []);
 
-  useEffect(() => {
-    if (containerRef.current !== null) {
-      random.assign(graph, { scale: 1000, center: 0 });
-      const renderer = new Sigma(graph, containerRef.current);
-    }
-  });
-
-  return <div ref={containerRef} style={{ height: "100vh" }}></div>;
+  return <Network graph={graph} />;
 }
 
 export default App;
