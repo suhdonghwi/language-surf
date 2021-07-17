@@ -31,12 +31,10 @@ export default function Network({ graph }: NetworkProps) {
 
   const app = useApp();
   const [labeledNodes, setLabeledNodes] = useState<string[]>([]);
+
   useEffect(() => {
     const viewport = app.stage.children[0] as Viewport;
-
     function updateLabeledNodes() {
-      console.log("update");
-
       const nodes: string[] = [];
       graph.forEachNode((key) => {
         const x = graph.getNodeAttribute(key, "x");
@@ -53,6 +51,7 @@ export default function Network({ graph }: NetworkProps) {
 
     viewport.on("drag-end", updateLabeledNodes);
     viewport.on("zoomed-end", updateLabeledNodes);
+    updateLabeledNodes();
 
     return () => {
       viewport.removeAllListeners();

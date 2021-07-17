@@ -27,14 +27,15 @@ function Node({ x, y, radius, label, showLabel }: NodeProps) {
     <Container x={x} y={y}>
       <Graphics draw={draw} />
       <Text
-        x={radius + 3}
-        y={-6}
+        x={radius * 1.4}
+        y={-radius / 1.6}
         text={label}
         visible={showLabel}
         resolution={4}
         style={
           new TextStyle({
-            fontSize: 10,
+            align: "center",
+            fontSize: radius,
           })
         }
       />
