@@ -88,6 +88,7 @@ export default function Network({ graph }: NetworkProps) {
           showLabel={labeledNodes.includes(key)}
           onMouseover={() => onMouseover(key)}
           onMouseout={() => onMouseout(key)}
+          highlight={key == hoverNode}
         />
       ))}
     </Container>

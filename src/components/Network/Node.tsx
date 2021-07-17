@@ -10,6 +10,7 @@ interface NodeProps {
   radius: number;
   label: string;
   showLabel: boolean;
+  highlight: boolean;
 
   onMouseover(): void;
   onMouseout(): void;
@@ -21,17 +22,18 @@ function Node({
   radius,
   label,
   showLabel,
+  highlight,
   onMouseover,
   onMouseout,
 }: NodeProps) {
   const draw = useCallback(
     (g) => {
       g.clear();
-      g.beginFill(0x343a40);
+      g.beginFill(highlight ? 0x0ca678 : 0x343a40);
       g.drawCircle(0, 0, radius);
       g.endFill();
     },
-    [radius]
+    [radius, highlight]
   );
 
   return (
