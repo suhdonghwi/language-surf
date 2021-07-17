@@ -7,9 +7,10 @@ interface NodeProps {
   y: number;
   radius: number;
   label: string;
+  showLabel: boolean;
 }
 
-export default function Node({ x, y, radius, label }: NodeProps) {
+export default function Node({ x, y, radius, label, showLabel }: NodeProps) {
   const draw = useCallback(
     (g) => {
       g.clear();
@@ -23,17 +24,20 @@ export default function Node({ x, y, radius, label }: NodeProps) {
   return (
     <Container x={x} y={y}>
       <Graphics draw={draw} />
-      <Text
-        x={radius + 3}
-        y={-6}
-        text={label}
-        style={
-          new TextStyle({
-            fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
-            fontSize: 10,
-          })
-        }
-      />
+      {showLabel && (
+        <Text
+          x={radius + 3}
+          y={-6}
+          text={label}
+          resolution={4}
+          style={
+            new TextStyle({
+              fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+              fontSize: 10,
+            })
+          }
+        />
+      )}
     </Container>
   );
 }

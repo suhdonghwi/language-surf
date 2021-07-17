@@ -54,6 +54,7 @@ export default function Network({ graph }: NetworkProps) {
           y={graph.getNodeAttribute(key, "y")}
           radius={graph.getNodeAttribute(key, "size") / 2}
           label={graph.getNodeAttribute(key, "name")}
+          showLabel={false}
         />
       ))}
     </Container>
