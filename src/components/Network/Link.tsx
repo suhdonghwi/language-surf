@@ -1,3 +1,4 @@
+import React from "react";
 import { Graphics } from "@inlet/react-pixi";
 import { useCallback } from "react";
 
@@ -8,12 +9,7 @@ interface LinkProps {
   targetY: number;
 }
 
-export default function Link({
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-}: LinkProps) {
+function Link({ sourceX, sourceY, targetX, targetY }: LinkProps) {
   const draw = useCallback(
     (g) => {
       g.clear();
@@ -26,3 +22,5 @@ export default function Link({
 
   return <Graphics draw={draw} />;
 }
+
+export default React.memo(Link);

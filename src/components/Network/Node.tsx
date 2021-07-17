@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Container, Graphics, Text } from "@inlet/react-pixi";
 import { TextStyle } from "pixi.js";
 import { useCallback } from "react";
@@ -10,7 +12,7 @@ interface NodeProps {
   showLabel: boolean;
 }
 
-export default function Node({ x, y, radius, label, showLabel }: NodeProps) {
+function Node({ x, y, radius, label, showLabel }: NodeProps) {
   const draw = useCallback(
     (g) => {
       g.clear();
@@ -24,20 +26,21 @@ export default function Node({ x, y, radius, label, showLabel }: NodeProps) {
   return (
     <Container x={x} y={y}>
       <Graphics draw={draw} />
-      {showLabel && (
-        <Text
-          x={radius + 3}
-          y={-6}
-          text={label}
-          resolution={4}
-          style={
-            new TextStyle({
-              fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
-              fontSize: 10,
-            })
-          }
-        />
-      )}
+      <Text
+        x={radius + 3}
+        y={-6}
+        text={label}
+        visible={showLabel}
+        resolution={4}
+        style={
+          new TextStyle({
+            fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+            fontSize: 10,
+          })
+        }
+      />
     </Container>
   );
 }
+
+export default React.memo(Node);

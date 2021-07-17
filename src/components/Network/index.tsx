@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Container, useApp, useTick } from "@inlet/react-pixi";
+import { Container } from "@inlet/react-pixi";
 
 import Graph from "graphology";
 import { random } from "graphology-layout";
@@ -8,7 +8,6 @@ import noverlap from "graphology-layout-noverlap";
 
 import Node from "./Node";
 import Link from "./Link";
-import { Viewport } from "pixi-viewport";
 
 interface NetworkProps {
   graph: Graph;
@@ -28,12 +27,6 @@ export default function Network({ graph }: NetworkProps) {
       settings: { margin: 2 },
     });
   }, [graph]);
-
-  const app = useApp();
-  useTick(() => {
-    const viewport = app.stage.children[0] as Viewport;
-    // console.log(viewport.getVisibleBounds());
-  });
 
   return (
     <Container>
