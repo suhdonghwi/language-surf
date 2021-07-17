@@ -38,7 +38,6 @@ const PixiComponentViewport = PixiComponent("Viewport", {
       .pinch()
       .wheel()
       .moveCenter(new PIXI.Point(0, 0))
-      .setZoom(2)
       .clampZoom({ minScale: 0.75, maxScale: 20 })
       .decelerate();
 

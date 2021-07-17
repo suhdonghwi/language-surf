@@ -20,7 +20,7 @@ function App() {
     }
 
     g.forEachNode((key) => {
-      g.setNodeAttribute(key, "size", 1.5 + 0.1 * g.outDegree(key));
+      g.setNodeAttribute(key, "size", 5 + 0.5 * g.outDegree(key));
     });
 
     return g;
@@ -30,7 +30,13 @@ function App() {
     <Stage
       width={window.innerWidth}
       height={window.innerHeight}
-      options={{ resizeTo: window, backgroundColor: 0xf1f3f5 }}
+      options={{
+        resizeTo: window,
+        backgroundColor: 0xf1f3f5,
+        antialias: true,
+        autoDensity: true,
+        resolution: 2,
+      }}
     >
       <Viewport
         screenWidth={window.innerWidth}

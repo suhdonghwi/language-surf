@@ -17,7 +17,7 @@ export default function Link({
   const draw = useCallback(
     (g) => {
       g.clear();
-      g.lineStyle(0.3, 0x343a40, 0.1)
+      g.lineStyle(1, 0x343a40, 0.1)
         .moveTo(sourceX, sourceY)
         .lineTo(targetX, targetY);
     },

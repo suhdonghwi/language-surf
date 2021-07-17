@@ -1,13 +1,14 @@
 import { useMemo } from "react";
-import { Container } from "@inlet/react-pixi";
+import { Container, useApp, useTick } from "@inlet/react-pixi";
 
 import Graph from "graphology";
-import { circlepack, circular, random } from "graphology-layout";
+import { random } from "graphology-layout";
 import forceAtlas2 from "graphology-layout-forceatlas2";
 import noverlap from "graphology-layout-noverlap";
 
 import Node from "./Node";
 import Link from "./Link";
+import { Viewport } from "pixi-viewport";
 
 interface NetworkProps {
   graph: Graph;
@@ -15,18 +16,24 @@ interface NetworkProps {
 
 export default function Network({ graph }: NetworkProps) {
   useMemo(() => {
-    random.assign(graph, { scale: 100, center: 0 });
+    random.assign(graph, { scale: 1000, center: 0 });
     forceAtlas2.assign(graph, {
-      iterations: 20,
+      iterations: 1,
       settings: {
-        gravity: 10,
+        gravity: 0.1,
       },
     });
     noverlap.assign(graph, {
       maxIterations: 100,
-      settings: { margin: 1 },
+      settings: { margin: 2 },
     });
   }, [graph]);
+
+  const app = useApp();
+  useTick(() => {
+    const viewport = app.stage.children[0] as Viewport;
+    // console.log(viewport.getVisibleBounds());
+  });
 
   return (
     <Container>
@@ -46,6 +53,7 @@ export default function Network({ graph }: NetworkProps) {
           x={graph.getNodeAttribute(key, "x")}
           y={graph.getNodeAttribute(key, "y")}
           radius={graph.getNodeAttribute(key, "size") / 2}
+          label={graph.getNodeAttribute(key, "name")}
         />
       ))}
     </Container>
