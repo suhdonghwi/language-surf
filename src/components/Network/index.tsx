@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Container } from "@inlet/react-pixi";
 
 import Graph from "graphology";
-import { random } from "graphology-layout";
+import { circlepack, circular, random } from "graphology-layout";
 import forceAtlas2 from "graphology-layout-forceatlas2";
 import noverlap from "graphology-layout-noverlap";
 
@@ -15,17 +15,16 @@ interface NetworkProps {
 
 export default function Network({ graph }: NetworkProps) {
   useMemo(() => {
-    random.assign(graph, { scale: 700, center: 0 });
+    random.assign(graph, { scale: 100, center: 0 });
     forceAtlas2.assign(graph, {
-      iterations: 50,
+      iterations: 20,
       settings: {
-        gravity: 1,
-        adjustSizes: true,
-        barnesHutOptimize: true,
+        gravity: 10,
       },
     });
     noverlap.assign(graph, {
-      maxIterations: 50,
+      maxIterations: 100,
+      settings: { margin: 1 },
     });
   }, [graph]);
 
@@ -46,7 +45,7 @@ export default function Network({ graph }: NetworkProps) {
           key={key}
           x={graph.getNodeAttribute(key, "x")}
           y={graph.getNodeAttribute(key, "y")}
-          radius={2 + 0.1 * graph.outDegree(key)}
+          radius={graph.getNodeAttribute(key, "size") / 2}
         />
       ))}
     </Container>

@@ -19,6 +19,10 @@ function App() {
       g.addEdge(source, target);
     }
 
+    g.forEachNode((key) => {
+      g.setNodeAttribute(key, "size", 1.5 + 0.1 * g.outDegree(key));
+    });
+
     return g;
   }, []);
 
@@ -26,7 +30,7 @@ function App() {
     <Stage
       width={window.innerWidth}
       height={window.innerHeight}
-      options={{ resizeTo: window, backgroundColor: 0xffffff }}
+      options={{ resizeTo: window, backgroundColor: 0xf1f3f5 }}
     >
       <Viewport
         screenWidth={window.innerWidth}
