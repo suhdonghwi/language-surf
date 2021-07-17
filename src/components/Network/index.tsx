@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Container, useApp } from "@inlet/react-pixi";
+import { Container, useApp } from "@inlet/react-pixi/animated";
 
 import Graph from "graphology";
 import { random } from "graphology-layout";
@@ -34,6 +34,7 @@ export default function Network({ graph }: NetworkProps) {
 
   useEffect(() => {
     const viewport = app.stage.children[0] as Viewport;
+
     function updateLabeledNodes() {
       const nodes: string[] = [];
       graph.forEachNode((key) => {
@@ -50,19 +51,19 @@ export default function Network({ graph }: NetworkProps) {
     }
 
     viewport.on("drag-end", updateLabeledNodes);
-    viewport.on("zoomed-end", updateLabeledNodes);
+    //viewport.on("zoomed-end", updateLabeledNodes);
     updateLabeledNodes();
 
     return () => {
       viewport.removeAllListeners();
     };
-  }, []);
+  }, [graph, app.stage.children]);
 
   const [hoverNode, setHoverNode] = useState<string | null>(null);
-  const onMouseover = useCallback((key: string) => {
+  const onMouseover = useCallback((key) => {
     setHoverNode(key);
   }, []);
-  const onMouseout = useCallback((_) => {
+  const onMouseout = useCallback((key) => {
     setHoverNode(null);
   }, []);
 
@@ -88,7 +89,7 @@ export default function Network({ graph }: NetworkProps) {
           showLabel={labeledNodes.includes(key)}
           onMouseover={() => onMouseover(key)}
           onMouseout={() => onMouseout(key)}
-          highlight={key == hoverNode}
+          highlight={key === hoverNode}
         />
       ))}
     </Container>

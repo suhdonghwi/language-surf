@@ -1,5 +1,5 @@
 import React from "react";
-import { Graphics } from "@inlet/react-pixi";
+import { Graphics } from "@inlet/react-pixi/animated";
 import { useCallback } from "react";
 
 interface LinkProps {

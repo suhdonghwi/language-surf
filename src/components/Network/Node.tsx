@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container, Graphics, Text } from "@inlet/react-pixi";
+import { Container, Graphics, Text } from "@inlet/react-pixi/animated";
 import { Circle, TextStyle } from "pixi.js";
 import { useCallback } from "react";
 
@@ -40,18 +40,18 @@ function Node({
     <Container x={x} y={y}>
       <Graphics
         draw={draw}
-        tint={highlight ? 0x0ca678 : 0x495057}
         interactive={true}
         hitArea={new Circle(0, 0, radius)}
         mouseover={onMouseover}
         mouseout={onMouseout}
+        tint={highlight ? 0x0ca678 : 0x495057}
       />
       <Text
         x={radius * 1.4}
         y={-radius / 1.6}
         text={label}
         visible={showLabel}
-        resolution={4}
+        resolution={8}
         style={
           new TextStyle({
             align: "center",

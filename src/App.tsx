@@ -1,4 +1,4 @@
-import { Stage } from "@inlet/react-pixi";
+import { Stage } from "@inlet/react-pixi/animated";
 
 import Network from "./components/Network";
 import Viewport from "./components/Viewport";

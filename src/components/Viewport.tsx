@@ -2,8 +2,7 @@ import React from "react";
 import * as PIXI from "pixi.js";
 
 import { Viewport as PixiViewport } from "pixi-viewport";
-import { PixiComponent } from "@inlet/react-pixi";
-import { useApp } from "@inlet/react-pixi";
+import { PixiComponent, useApp } from "@inlet/react-pixi/animated";
 
 interface Props {
   children: React.ReactNode;
