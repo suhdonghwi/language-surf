@@ -219,7 +219,7 @@ def serialize_language(language_list):
 
     for lang in language_list:
         result[lang.id] = {
-            "name": lang.label,
+            "label": lang.label,
             "wikipedia_pageid": lang.wikipedia_pageid,
             "inception": lang.inception,
             "paradigm": list(map(lambda p: p.id, lang.paradigm)),

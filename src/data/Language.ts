@@ -2,7 +2,7 @@ import languageJson from "./json/language.json";
 import influenceJson from "./json/influence.json";
 
 export default interface Language {
-  name: string;
+  label: string;
   wikipedia_pageid: number;
   inception: {
     time: Date;
