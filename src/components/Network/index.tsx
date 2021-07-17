@@ -62,6 +62,9 @@ export default function Network({ graph }: NetworkProps) {
   const onMouseover = useCallback((key: string) => {
     setHoverNode(key);
   }, []);
+  const onMouseout = useCallback((_) => {
+    setHoverNode(null);
+  }, []);
 
   return (
     <Container>
@@ -84,6 +87,7 @@ export default function Network({ graph }: NetworkProps) {
           label={graph.getNodeAttribute(key, "name")}
           showLabel={labeledNodes.includes(key)}
           onMouseover={() => onMouseover(key)}
+          onMouseout={() => onMouseout(key)}
         />
       ))}
     </Container>

@@ -12,9 +12,18 @@ interface NodeProps {
   showLabel: boolean;
 
   onMouseover(): void;
+  onMouseout(): void;
 }
 
-function Node({ x, y, radius, label, showLabel, onMouseover }: NodeProps) {
+function Node({
+  x,
+  y,
+  radius,
+  label,
+  showLabel,
+  onMouseover,
+  onMouseout,
+}: NodeProps) {
   const draw = useCallback(
     (g) => {
       g.clear();
@@ -32,6 +41,7 @@ function Node({ x, y, radius, label, showLabel, onMouseover }: NodeProps) {
         interactive={true}
         hitArea={new Circle(0, 0, radius)}
         mouseover={onMouseover}
+        mouseout={onMouseout}
       />
       <Text
         x={radius * 1.4}
