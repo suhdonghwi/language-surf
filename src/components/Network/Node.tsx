@@ -29,17 +29,18 @@ function Node({
   const draw = useCallback(
     (g) => {
       g.clear();
-      g.beginFill(highlight ? 0x0ca678 : 0x343a40);
+      g.beginFill(0xffffff);
       g.drawCircle(0, 0, radius);
       g.endFill();
     },
-    [radius, highlight]
+    [radius]
   );
 
   return (
     <Container x={x} y={y}>
       <Graphics
         draw={draw}
+        tint={highlight ? 0x0ca678 : 0x495057}
         interactive={true}
         hitArea={new Circle(0, 0, radius)}
         mouseover={onMouseover}
