@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { Container } from "@inlet/react-pixi";
+import { useEffect, useMemo, useState } from "react";
+import { Container, useApp } from "@inlet/react-pixi";
 
 import Graph from "graphology";
 import { random } from "graphology-layout";
@@ -8,6 +8,7 @@ import noverlap from "graphology-layout-noverlap";
 
 import Node from "./Node";
 import Link from "./Link";
+import { Viewport } from "pixi-viewport";
 
 interface NetworkProps {
   graph: Graph;
@@ -28,6 +29,36 @@ export default function Network({ graph }: NetworkProps) {
     });
   }, [graph]);
 
+  const app = useApp();
+  const [labeledNodes, setLabeledNodes] = useState<string[]>([]);
+  useEffect(() => {
+    const viewport = app.stage.children[0] as Viewport;
+
+    function updateLabeledNodes() {
+      console.log("update");
+
+      const nodes: string[] = [];
+      graph.forEachNode((key) => {
+        const x = graph.getNodeAttribute(key, "x");
+        const y = graph.getNodeAttribute(key, "y");
+
+        if (viewport.getVisibleBounds().contains(x, y)) {
+          nodes.push(key);
+        }
+      });
+      nodes.sort((a, b) => graph.outDegree(b) - graph.outDegree(a));
+
+      setLabeledNodes(nodes.slice(0, 10));
+    }
+
+    viewport.on("drag-end", updateLabeledNodes);
+    viewport.on("zoomed-end", updateLabeledNodes);
+
+    return () => {
+      viewport.removeAllListeners();
+    };
+  }, []);
+
   return (
     <Container>
       {graph.edges().map((key) => (
@@ -47,7 +78,7 @@ export default function Network({ graph }: NetworkProps) {
           y={graph.getNodeAttribute(key, "y")}
           radius={graph.getNodeAttribute(key, "size") / 2}
           label={graph.getNodeAttribute(key, "name")}
-          showLabel={false}
+          showLabel={labeledNodes.includes(key)}
         />
       ))}
     </Container>

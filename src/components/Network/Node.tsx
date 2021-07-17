@@ -34,7 +34,6 @@ function Node({ x, y, radius, label, showLabel }: NodeProps) {
         resolution={4}
         style={
           new TextStyle({
-            fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
             fontSize: 10,
           })
         }
