@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Container, Graphics, Text } from "@inlet/react-pixi";
-import { TextStyle } from "pixi.js";
+import { Circle, TextStyle } from "pixi.js";
 import { useCallback } from "react";
 
 interface NodeProps {
@@ -10,9 +10,11 @@ interface NodeProps {
   radius: number;
   label: string;
   showLabel: boolean;
+
+  onMouseover(): void;
 }
 
-function Node({ x, y, radius, label, showLabel }: NodeProps) {
+function Node({ x, y, radius, label, showLabel, onMouseover }: NodeProps) {
   const draw = useCallback(
     (g) => {
       g.clear();
@@ -25,7 +27,12 @@ function Node({ x, y, radius, label, showLabel }: NodeProps) {
 
   return (
     <Container x={x} y={y}>
-      <Graphics draw={draw} />
+      <Graphics
+        draw={draw}
+        interactive={true}
+        hitArea={new Circle(0, 0, radius)}
+        mouseover={onMouseover}
+      />
       <Text
         x={radius * 1.4}
         y={-radius / 1.6}

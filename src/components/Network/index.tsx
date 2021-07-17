@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Container, useApp } from "@inlet/react-pixi";
 
 import Graph from "graphology";
@@ -58,6 +58,11 @@ export default function Network({ graph }: NetworkProps) {
     };
   }, []);
 
+  const [hoverNode, setHoverNode] = useState<string | null>(null);
+  const onMouseover = useCallback((key: string) => {
+    setHoverNode(key);
+  }, []);
+
   return (
     <Container>
       {graph.edges().map((key) => (
@@ -78,6 +83,7 @@ export default function Network({ graph }: NetworkProps) {
           radius={graph.getNodeAttribute(key, "size") / 2}
           label={graph.getNodeAttribute(key, "name")}
           showLabel={labeledNodes.includes(key)}
+          onMouseover={() => onMouseover(key)}
         />
       ))}
     </Container>
