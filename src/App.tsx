@@ -1,13 +1,14 @@
-import { Stage } from "@inlet/react-pixi/animated";
+import { useEffect, useMemo, useRef } from "react";
 
-import Network from "./components/Network";
-import Viewport from "./components/Viewport";
-
-import { useMemo } from "react";
 import Language, { languageData, influenceData } from "./data/Language";
+import Sigma from "sigma";
+
 import { DirectedGraph } from "graphology";
+import { random } from "graphology-layout";
 
 function App() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const graph = useMemo(() => {
     const g = new DirectedGraph<Language>();
 
@@ -26,28 +27,14 @@ function App() {
     return g;
   }, []);
 
-  return (
-    <Stage
-      width={window.innerWidth}
-      height={window.innerHeight}
-      options={{
-        resizeTo: window,
-        backgroundColor: 0xf1f3f5,
-        antialias: true,
-        autoDensity: true,
-        resolution: 2,
-      }}
-    >
-      <Viewport
-        screenWidth={window.innerWidth}
-        screenHeight={window.innerHeight}
-        worldWidth={window.innerWidth}
-        worldHeight={window.innerHeight}
-      >
-        <Network graph={graph} />
-      </Viewport>
-    </Stage>
-  );
+  useEffect(() => {
+    if (containerRef.current !== null) {
+      random.assign(graph, { scale: 1000, center: 0 });
+      const renderer = new Sigma(graph, containerRef.current);
+    }
+  });
+
+  return <div ref={containerRef} style={{ height: "100vh" }}></div>;
 }
 
 export default App;
