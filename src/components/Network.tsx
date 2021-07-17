@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import { useEffect, useRef } from "react";
 
 import Graph from "graphology";
@@ -31,5 +32,10 @@ export default function Network({ graph }: NetworkProps) {
     };
   }, [graph]);
 
-  return <div ref={containerRef} style={{ height: "100vh" }} />;
+  return (
+    <div
+      ref={containerRef}
+      sx={{ height: "100vh", backgroundColor: "#212529" }}
+    />
+  );
 }
