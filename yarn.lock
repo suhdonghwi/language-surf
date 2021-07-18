@@ -10227,10 +10227,9 @@ side-channel@^1.0.4:
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
 
-sigma@^2.0.0-beta7:
+"sigma@ssh://git@github.com:suhdonghwi/sigma.js#v2":
   version "2.0.0-beta7"
-  resolved "https://registry.yarnpkg.com/sigma/-/sigma-2.0.0-beta7.tgz#4d66325a89ef6a6c43303d35b218c9ae625be351"
-  integrity sha512-dvihXjri59AvB1x7WpxsmVWveazKbBUQSkWuZkJXWuN34WSVD0BnQcJBBaluf55hrfAc2GrKvkakcEVHm83bSw==
+  resolved "ssh://git@github.com:suhdonghwi/sigma.js#84902ac48d7c1b942e4fcbe85748033a4a138c2b"
   dependencies:
     "@yomguithereal/helpers" "^1.1.1"
     events "^3.3.0"

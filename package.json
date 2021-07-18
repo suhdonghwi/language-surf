@@ -19,7 +19,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "sigma": "^2.0.0-beta7",
+    "sigma": "ssh://git@github.com:suhdonghwi/sigma.js#v2",
     "theme-ui": "^0.10.0",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
