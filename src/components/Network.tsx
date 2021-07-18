@@ -6,6 +6,7 @@ import { random } from "graphology-layout";
 import Sigma from "sigma";
 import forceAtlas2 from "graphology-layout-forceatlas2";
 import NodeAttribute from "../data/NodeAttribute";
+import { animateNodes } from "../utils/animate";
 
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
@@ -42,23 +43,6 @@ export default function Network({ graph }: NetworkProps) {
       defaultEdgeType: "arrow",
       zIndex: true, // NOT WORKING
       labelColor: "#212529",
-      nodeReducer: (key, data) => {
-        key = key.toString();
-
-        if (highlightNode === null) {
-          return data;
-        }
-
-        if (highlightNode === key) {
-          return { ...data, color: "#12b886" };
-        } else if (influencedToNodes.has(key)) {
-          return { ...data, color: "#1c7ed6" };
-        } else if (influencedByNodes.has(key)) {
-          return { ...data, color: "#f03e3e" };
-        } else {
-          return { ...data, color: defaultEdgeColor, label: "" };
-        }
-      },
       edgeReducer: (key, data) => {
         key = key.toString();
 
@@ -99,16 +83,39 @@ export default function Network({ graph }: NetworkProps) {
         influencedByNodes.add(graph.source(edge));
       }
 
-      renderer.refresh();
+      animateNodes(
+        graph,
+        (key) => {
+          if (highlightNode === key) {
+            return { color: "#12b886" };
+          } else if (influencedToNodes.has(key)) {
+            return { color: "#1c7ed6" };
+          } else if (influencedByNodes.has(key)) {
+            return { color: "#f03e3e" };
+          } else {
+            return { color: defaultEdgeColor };
+          }
+        },
+        { duration: 100 }
+      );
     });
 
     renderer.on("leaveNode", (e) => {
       highlightNode = null;
+
       influencedToEdges.clear();
       influencedToNodes.clear();
 
       influencedByEdges.clear();
       influencedByNodes.clear();
+
+      animateNodes(
+        graph,
+        () => ({
+          color: defaultNodeColor,
+        }),
+        { duration: 100 }
+      );
 
       renderer.refresh();
     });
