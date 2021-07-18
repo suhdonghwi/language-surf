@@ -6,7 +6,7 @@ import { random } from "graphology-layout";
 import Sigma from "sigma";
 import forceAtlas2 from "graphology-layout-forceatlas2";
 import NodeAttribute from "../data/NodeAttribute";
-import { animateNodes } from "../utils/animate";
+import { animateEdges, animateNodes } from "../utils/animate";
 
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
@@ -43,31 +43,6 @@ export default function Network({ graph }: NetworkProps) {
       defaultEdgeType: "arrow",
       zIndex: true, // NOT WORKING
       labelColor: "#212529",
-      edgeReducer: (key, data) => {
-        key = key.toString();
-
-        if (highlightNode === null) {
-          return data;
-        }
-
-        if (influencedToEdges.has(key)) {
-          return {
-            ...data,
-            color: "#1c7ed6",
-            size: 1.5,
-            z: 99,
-          };
-        } else if (influencedByEdges.has(key)) {
-          return {
-            ...data,
-            color: "#f03e3e",
-            size: 1.5,
-            z: 99,
-          };
-        } else {
-          return data;
-        }
-      },
     });
 
     renderer.on("enterNode", (e) => {
@@ -98,6 +73,32 @@ export default function Network({ graph }: NetworkProps) {
         },
         { duration: 100 }
       );
+
+      animateEdges(
+        graph,
+        (key) => {
+          if (influencedToEdges.has(key)) {
+            return {
+              color: "#1c7ed6",
+              size: 1.5,
+              z: 99,
+            };
+          } else if (influencedByEdges.has(key)) {
+            return {
+              color: "#f03e3e",
+              size: 1.5,
+              z: 99,
+            };
+          } else {
+            return {
+              color: defaultEdgeColor,
+              size: 1,
+              z: 0,
+            };
+          }
+        },
+        { duration: 100 }
+      );
     });
 
     renderer.on("leaveNode", (e) => {
@@ -113,6 +114,15 @@ export default function Network({ graph }: NetworkProps) {
         graph,
         () => ({
           color: defaultNodeColor,
+        }),
+        { duration: 100 }
+      );
+
+      animateEdges(
+        graph,
+        () => ({
+          size: 1,
+          color: defaultEdgeColor,
         }),
         { duration: 100 }
       );
