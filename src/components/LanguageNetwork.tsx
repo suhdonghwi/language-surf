@@ -15,7 +15,7 @@ export default function LanguageNetwork() {
     }
 
     for (const { source, target } of influenceData) {
-      g.addEdge(source, target);
+      g.addEdge(source, target, { z: 0 });
     }
 
     g.forEachNode((key) => {

@@ -6,7 +6,6 @@ import { random } from "graphology-layout";
 import Sigma from "sigma";
 import forceAtlas2 from "graphology-layout-forceatlas2";
 import NodeAttribute from "../data/NodeAttribute";
-import { useThemeUI } from "theme-ui";
 
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
@@ -14,7 +13,6 @@ interface NetworkProps {
 
 export default function Network({ graph }: NetworkProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const themeUI = useThemeUI();
 
   useEffect(() => {
     if (containerRef.current === null) return;
@@ -73,12 +71,14 @@ export default function Network({ graph }: NetworkProps) {
             ...data,
             color: "#1c7ed6",
             size: 1.5,
+            z: 99,
           };
         } else if (influencedByEdges.has(key)) {
           return {
             ...data,
             color: "#f03e3e",
             size: 1.5,
+            z: 99,
           };
         } else {
           return data;
