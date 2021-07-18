@@ -17,7 +17,7 @@ export default function animate<T1, T2>(
     const source = graph.getNodeAttributes(key);
     const target = Object.assign({}, source, nodeReducer(key));
 
-    nodeInterpolators[key] = d3.interpolate(source, target);
+    nodeInterpolators[key] = d3.interpolateObject(source, target);
     nodeTargetAttrs[key] = target;
   });
 
@@ -27,7 +27,7 @@ export default function animate<T1, T2>(
     const source = graph.getEdgeAttributes(key);
     const target = Object.assign({}, source, edgeReducer(key));
 
-    edgeInterpolators[key] = d3.interpolate(source, target);
+    edgeInterpolators[key] = d3.interpolateObject(source, target);
     edgeTargetAttrs[key] = target;
   });
 

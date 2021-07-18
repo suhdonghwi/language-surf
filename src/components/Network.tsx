@@ -31,6 +31,15 @@ export default function Network({ graph }: NetworkProps) {
     const defaultEdgeColor = "rgba(100, 100, 100, 0.5)",
       defaultNodeColor = "#495057";
 
+    graph.forEachNode((key) =>
+      graph.setNodeAttribute(key, "color", defaultNodeColor)
+    );
+
+    graph.forEachEdge((key) => {
+      graph.setEdgeAttribute(key, "color", defaultEdgeColor);
+      graph.setEdgeAttribute(key, "size", 1);
+    });
+
     let highlightNode: string | null = null;
     let influencedToEdges: Set<string> = new Set(),
       influencedToNodes: Set<string> = new Set();
@@ -38,10 +47,8 @@ export default function Network({ graph }: NetworkProps) {
       influencedByNodes: Set<string> = new Set();
 
     const renderer = new Sigma(graph, containerRef.current, {
-      defaultEdgeColor,
-      defaultNodeColor,
       defaultEdgeType: "arrow",
-      zIndex: true, // NOT WORKING
+      zIndex: true,
       labelColor: "#212529",
     });
 
