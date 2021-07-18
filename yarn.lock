@@ -10229,7 +10229,7 @@ side-channel@^1.0.4:
 
 "sigma@ssh://git@github.com:suhdonghwi/sigma.js#v2":
   version "2.0.0-beta7"
-  resolved "ssh://git@github.com:suhdonghwi/sigma.js#84902ac48d7c1b942e4fcbe85748033a4a138c2b"
+  resolved "ssh://git@github.com:suhdonghwi/sigma.js#095d45f1c56f44f05b4efc36d509b350124ae1bc"
   dependencies:
     "@yomguithereal/helpers" "^1.1.1"
     events "^3.3.0"
