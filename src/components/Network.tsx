@@ -6,7 +6,7 @@ import { random } from "graphology-layout";
 import Sigma from "sigma";
 import forceAtlas2 from "graphology-layout-forceatlas2";
 import NodeAttribute from "../data/NodeAttribute";
-import { animateEdges, animateNodes } from "../utils/animate";
+import animate from "../utils/animate";
 
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
@@ -58,7 +58,7 @@ export default function Network({ graph }: NetworkProps) {
         influencedByNodes.add(graph.source(edge));
       }
 
-      animateNodes(
+      animate(
         graph,
         (key) => {
           if (highlightNode === key) {
@@ -71,11 +71,6 @@ export default function Network({ graph }: NetworkProps) {
             return { color: defaultEdgeColor };
           }
         },
-        { duration: 100 }
-      );
-
-      animateEdges(
-        graph,
         (key) => {
           if (influencedToEdges.has(key)) {
             return {
@@ -110,24 +105,17 @@ export default function Network({ graph }: NetworkProps) {
       influencedByEdges.clear();
       influencedByNodes.clear();
 
-      animateNodes(
+      animate(
         graph,
         () => ({
           color: defaultNodeColor,
         }),
-        { duration: 100 }
-      );
-
-      animateEdges(
-        graph,
         () => ({
           size: 1,
           color: defaultEdgeColor,
         }),
         { duration: 100 }
       );
-
-      renderer.refresh();
     });
 
     return () => {

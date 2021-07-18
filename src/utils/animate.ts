@@ -5,55 +5,30 @@ interface AnimationOptions {
   duration: number;
 }
 
-export function animateNodes<T>(
-  graph: Graph<T>,
-  reducer: (key: string) => Partial<T> | undefined,
+export default function animate<T1, T2>(
+  graph: Graph<T1, T2>,
+  nodeReducer: (key: string) => Partial<T1>,
+  edgeReducer: (key: string) => Partial<T2>,
   options: AnimationOptions
 ) {
-  const interpolators: Record<string, (t: number) => T> = {};
-  const targetAttributes: Record<string, T> = {};
+  const nodeInterpolators: Record<string, (t: number) => T1> = {};
+  const nodeTargetAttrs: Record<string, T1> = {};
   graph.forEachNode((key) => {
     const source = graph.getNodeAttributes(key);
-    const target = Object.assign({}, source, reducer(key) || {});
+    const target = Object.assign({}, source, nodeReducer(key));
 
-    targetAttributes[key] = target;
-    interpolators[key] = d3.interpolate(source, target);
+    nodeInterpolators[key] = d3.interpolate(source, target);
+    nodeTargetAttrs[key] = target;
   });
 
-  const start = Date.now();
-
-  let frame: number | null = null;
-  const step = () => {
-    let progress = (Date.now() - start) / options.duration;
-
-    if (progress >= 1) {
-      graph.updateEachNodeAttributes((key) => targetAttributes[key]);
-      return;
-    }
-
-    graph.updateEachNodeAttributes((key) => interpolators[key](progress));
-    frame = requestAnimationFrame(step);
-  };
-
-  step();
-  return () => {
-    if (frame) cancelAnimationFrame(frame);
-  };
-}
-
-export function animateEdges<_, T>(
-  graph: Graph<_, T>,
-  reducer: (key: string) => Partial<T> | undefined,
-  options: AnimationOptions
-) {
-  const interpolators: Record<string, (t: number) => T> = {};
-  const targetAttributes: Record<string, T> = {};
+  const edgeInterpolators: Record<string, (t: number) => T2> = {};
+  const edgeTargetAttrs: Record<string, T2> = {};
   graph.forEachEdge((key) => {
     const source = graph.getEdgeAttributes(key);
-    const target = Object.assign({}, source, reducer(key) || {});
+    const target = Object.assign({}, source, edgeReducer(key));
 
-    targetAttributes[key] = target;
-    interpolators[key] = d3.interpolate(source, target);
+    edgeInterpolators[key] = d3.interpolate(source, target);
+    edgeTargetAttrs[key] = target;
   });
 
   const start = Date.now();
@@ -63,11 +38,13 @@ export function animateEdges<_, T>(
     let progress = (Date.now() - start) / options.duration;
 
     if (progress >= 1) {
-      graph.updateEachEdgeAttributes((key) => targetAttributes[key]);
+      graph.updateEachNodeAttributes((key) => nodeTargetAttrs[key]);
+      graph.updateEachEdgeAttributes((key) => edgeTargetAttrs[key]);
       return;
     }
 
-    graph.updateEachEdgeAttributes((key) => interpolators[key](progress));
+    graph.updateEachNodeAttributes((key) => nodeInterpolators[key](progress));
+    graph.updateEachEdgeAttributes((key) => edgeInterpolators[key](progress));
     frame = requestAnimationFrame(step);
   };
 
