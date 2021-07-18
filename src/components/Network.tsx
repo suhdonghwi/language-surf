@@ -3,8 +3,9 @@ import { useEffect, useRef } from "react";
 
 import Graph from "graphology";
 import { random } from "graphology-layout";
-import forceAtlas2 from "graphology-layout-forceatlas2";
 import Sigma from "sigma";
+import { useThemeUI } from "theme-ui";
+import forceAtlas2 from "graphology-layout-forceatlas2";
 
 interface NetworkProps {
   graph: Graph;
@@ -25,7 +26,11 @@ export default function Network({ graph }: NetworkProps) {
         adjustSizes: true,
       },
     });
-    const renderer = new Sigma(graph, containerRef.current);
+
+    const renderer = new Sigma(graph, containerRef.current, {
+      defaultEdgeColor: "rgba(100, 100, 100, 0.5)",
+      defaultNodeColor: "#495057",
+    });
 
     return () => {
       renderer.kill();
@@ -35,7 +40,7 @@ export default function Network({ graph }: NetworkProps) {
   return (
     <div
       ref={containerRef}
-      sx={{ height: "100vh", backgroundColor: "#212529" }}
+      sx={{ height: "100vh", backgroundColor: "background" }}
     />
   );
 }

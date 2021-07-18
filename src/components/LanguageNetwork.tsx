@@ -7,10 +7,10 @@ import Network from "./Network";
 
 export default function LanguageNetwork() {
   const graph = useMemo(() => {
-    const g = new DirectedGraph<Language>();
+    const g = new DirectedGraph();
 
     for (const [id, data] of Object.entries(languageData)) {
-      g.addNode(id, data);
+      g.addNode(id, { lang: data });
     }
 
     for (const { source, target } of influenceData) {
@@ -18,7 +18,12 @@ export default function LanguageNetwork() {
     }
 
     g.forEachNode((key) => {
-      g.setNodeAttribute(key, "size", 3 + 0.1 * g.outDegree(key));
+      g.setNodeAttribute(key, "size", 3 + 0.15 * g.outDegree(key));
+      g.setNodeAttribute(
+        key,
+        "label",
+        (g.getNodeAttribute(key, "lang") as Language).label
+      );
     });
 
     return g;
