@@ -33,6 +33,8 @@ export default function Network({ graph }: NetworkProps) {
     let highlightNode: string | null = null;
     let influencedToEdges: Set<string> = new Set(),
       influencedToNodes: Set<string> = new Set();
+    let influencedByEdges: Set<string> = new Set(),
+      influencedByNodes: Set<string> = new Set();
 
     const renderer = new Sigma(graph, containerRef.current, {
       defaultEdgeColor,
@@ -50,6 +52,8 @@ export default function Network({ graph }: NetworkProps) {
           return { ...data, color: "#12b886" };
         } else if (influencedToNodes.has(key)) {
           return { ...data, color: "#1c7ed6" };
+        } else if (influencedByNodes.has(key)) {
+          return { ...data, color: "#f03e3e" };
         } else {
           return { ...data, color: defaultEdgeColor, label: "" };
         }
@@ -67,6 +71,12 @@ export default function Network({ graph }: NetworkProps) {
             color: "#1c7ed6",
             size: 1.5,
           };
+        } else if (influencedByEdges.has(key)) {
+          return {
+            ...data,
+            color: "#f03e3e",
+            size: 1.5,
+          };
         } else {
           return data;
         }
@@ -75,9 +85,15 @@ export default function Network({ graph }: NetworkProps) {
 
     renderer.on("enterNode", (e) => {
       highlightNode = e.node;
+
       for (const edge of graph.outEdges(e.node)) {
         influencedToEdges.add(edge);
         influencedToNodes.add(graph.target(edge));
+      }
+
+      for (const edge of graph.inEdges(e.node)) {
+        influencedByEdges.add(edge);
+        influencedByNodes.add(graph.source(edge));
       }
 
       renderer.refresh();
@@ -87,6 +103,9 @@ export default function Network({ graph }: NetworkProps) {
       highlightNode = null;
       influencedToEdges.clear();
       influencedToNodes.clear();
+
+      influencedByEdges.clear();
+      influencedByNodes.clear();
 
       renderer.refresh();
     });
