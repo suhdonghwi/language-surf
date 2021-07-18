@@ -29,18 +29,44 @@ export default function Network({ graph }: NetworkProps) {
 
     const defaultEdgeColor = "rgba(100, 100, 100, 0.5)",
       defaultNodeColor = "#495057";
+
     let highlightNode: string | null = null;
+    let influencedToEdges: Set<string> = new Set(),
+      influencedToNodes: Set<string> = new Set();
 
     const renderer = new Sigma(graph, containerRef.current, {
       defaultEdgeColor,
       defaultNodeColor,
+      defaultEdgeType: "arrow",
+      zIndex: true, // NOT WORKING
       nodeReducer: (key, data) => {
-        if (highlightNode !== null) {
-          if (highlightNode === key) {
-            return { ...data, color: "#12b886" };
-          } else {
-            return { ...data, color: defaultEdgeColor };
-          }
+        key = key.toString();
+
+        if (highlightNode === null) {
+          return data;
+        }
+
+        if (highlightNode === key) {
+          return { ...data, color: "#12b886" };
+        } else if (influencedToNodes.has(key)) {
+          return { ...data, color: "#1c7ed6" };
+        } else {
+          return { ...data, color: defaultEdgeColor, label: "" };
+        }
+      },
+      edgeReducer: (key, data) => {
+        key = key.toString();
+
+        if (highlightNode === null) {
+          return data;
+        }
+
+        if (influencedToEdges.has(key)) {
+          return {
+            ...data,
+            color: "#1c7ed6",
+            size: 1.5,
+          };
         } else {
           return data;
         }
@@ -49,11 +75,19 @@ export default function Network({ graph }: NetworkProps) {
 
     renderer.on("enterNode", (e) => {
       highlightNode = e.node;
+      for (const edge of graph.outEdges(e.node)) {
+        influencedToEdges.add(edge);
+        influencedToNodes.add(graph.target(edge));
+      }
+
       renderer.refresh();
     });
 
     renderer.on("leaveNode", (e) => {
       highlightNode = null;
+      influencedToEdges.clear();
+      influencedToNodes.clear();
+
       renderer.refresh();
     });
 
