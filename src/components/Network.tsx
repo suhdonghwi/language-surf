@@ -53,6 +53,7 @@ export default function Network({ graph }: NetworkProps) {
     });
 
     renderer.on("enterNode", (e) => {
+      document.body.style.cursor = "pointer";
       highlightNode = e.node;
 
       for (const edge of graph.outEdges(e.node)) {
@@ -104,6 +105,7 @@ export default function Network({ graph }: NetworkProps) {
     });
 
     renderer.on("leaveNode", (e) => {
+      document.body.style.cursor = "default";
       highlightNode = null;
 
       influencedToEdges.clear();
