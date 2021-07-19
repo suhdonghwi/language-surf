@@ -3,6 +3,7 @@ import * as d3 from "d3-interpolate";
 
 interface AnimationOptions {
   duration: number;
+  onComplete?(): void;
 }
 
 export default function animate<T1, T2>(
@@ -40,6 +41,8 @@ export default function animate<T1, T2>(
     if (progress >= 1) {
       graph.updateEachNodeAttributes((key) => nodeTargetAttrs[key]);
       graph.updateEachEdgeAttributes((key) => edgeTargetAttrs[key]);
+
+      if (options.onComplete) options.onComplete();
       return;
     }
 

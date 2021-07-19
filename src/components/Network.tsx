@@ -71,15 +71,16 @@ export default function Network({ graph }: NetworkProps) {
         influencedByNodes.add(graph.source(edge));
       }
 
+      renderer.setSetting("labelManual", true);
       animate(
         graph,
         (key) => {
           if (highlightNode === key) {
             return { color: "#12b886" };
           } else if (influencedToNodes.has(key)) {
-            return { color: "#1c7ed6" };
+            return { color: "#1c7ed6", showLabel: true };
           } else if (influencedByNodes.has(key)) {
-            return { color: "#f03e3e" };
+            return { color: "#f03e3e", showLabel: true };
           } else {
             return { color: defaultEdgeColor };
           }
@@ -119,16 +120,24 @@ export default function Network({ graph }: NetworkProps) {
       influencedByEdges.clear();
       influencedByNodes.clear();
 
+      renderer.setSetting("labelManual", false);
       animate(
         graph,
         () => ({
           color: defaultNodeColor,
+          showLabel: undefined,
         }),
         () => ({
           size: 1,
           color: defaultEdgeColor,
         }),
-        { duration: 100 }
+        {
+          duration: 100,
+          onComplete: () => {
+            console.log("refreshing");
+            //renderer.refresh();
+          },
+        }
       );
     });
 
