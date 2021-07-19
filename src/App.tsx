@@ -1,14 +1,35 @@
+/** @jsxImportSource theme-ui */
 import { ThemeProvider } from "theme-ui";
 
 import LanguageNetwork from "./components/LanguageNetwork";
 import Sidebox from "./components/Sidebox";
 import theme from "./theme";
 
+import { FaBars } from "react-icons/fa";
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <LanguageNetwork />
-      <Sidebox />
+      <Sidebox visible={false} />
+      <button
+        sx={{
+          cursor: "pointer",
+          position: "absolute",
+          top: 3,
+          left: 0,
+          appearance: "none",
+          border: "none",
+          borderRadius: "0 10px 10px 0",
+          backgroundColor: "primary",
+          boxShadow: "0 4px 12px 0px rgba(0,0,0,.25)",
+          width: "3.5rem",
+          height: "3.5rem",
+          color: "white",
+        }}
+      >
+        <FaBars sx={{ fontSize: 5 }} />
+      </button>
     </ThemeProvider>
   );
 }

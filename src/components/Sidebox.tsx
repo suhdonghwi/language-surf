@@ -1,6 +1,10 @@
 /** @jsxImportSource theme-ui */
 
-export default function Sidebox() {
+interface SideboxProps {
+  visible: boolean;
+}
+
+export default function Sidebox({ visible }: SideboxProps) {
   return (
     <aside
       sx={{
@@ -15,6 +19,8 @@ export default function Sidebox() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        transform: visible ? "" : "translateX(-100%)",
+        transition: "transform 0.3s",
       }}
     >
       <h1 sx={{ fontSize: 5, marginBottom: 3 }}>🏄 Language Surf</h1>
