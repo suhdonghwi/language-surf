@@ -14,7 +14,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <LanguageNetwork />
+      <LanguageNetwork layout={layout} />
       <Sidebox
         visible={showSidebar}
         onClose={() => setShowSidebar(false)}

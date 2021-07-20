@@ -2,36 +2,21 @@
 import { useEffect, useRef } from "react";
 
 import { DirectedGraph } from "graphology";
-import { random } from "graphology-layout";
-import forceAtlas2 from "graphology-layout-forceatlas2";
-import noverlap from "graphology-layout-noverlap";
-
 import Sigma from "sigma";
 import NodeAttribute from "../data/NodeAttribute";
 import animate from "../utils/animate";
+import { LayoutMapping } from "../data/Layout";
 
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
+  layoutMapping: LayoutMapping;
 }
 
-export default function Network({ graph }: NetworkProps) {
+export default function Network({ graph, layoutMapping }: NetworkProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current === null) return;
-
-    random.assign(graph, { center: 0 });
-    forceAtlas2.assign(graph, {
-      iterations: 100,
-      settings: {
-        gravity: 1,
-        barnesHutOptimize: true,
-        adjustSizes: true,
-      },
-    });
-    noverlap.assign(graph, {
-      maxIterations: 100,
-    });
 
     const defaultEdgeColor = "rgba(100, 100, 100, 0.5)",
       defaultNodeColor = "#495057";
@@ -141,6 +126,20 @@ export default function Network({ graph }: NetworkProps) {
       renderer.kill();
     };
   }, [graph]);
+
+  useEffect(() => {
+    console.log("animating");
+
+    animate(
+      graph,
+      (key) => ({
+        x: layoutMapping[key].x,
+        y: layoutMapping[key].y,
+      }),
+      () => ({}),
+      { duration: 1000 }
+    );
+  }, [graph, layoutMapping]);
 
   return (
     <div
