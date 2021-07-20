@@ -1,5 +1,9 @@
 /** @jsxImportSource theme-ui */
+import { useState } from "react";
 import { FaAngleLeft } from "react-icons/fa";
+import Select from "react-virtualized-select";
+
+import Layout from "../data/Layout";
 
 interface SideboxProps {
   visible: boolean;
@@ -7,6 +11,14 @@ interface SideboxProps {
 }
 
 export default function Sidebox({ visible, onClose }: SideboxProps) {
+  const [layout, setLayout] = useState<Layout>("force");
+
+  function onChangeLayout(newLayout: Layout) {
+    if (layout === newLayout) return;
+
+    setLayout(newLayout);
+  }
+
   return (
     <aside
       sx={{
@@ -41,7 +53,7 @@ export default function Sidebox({ visible, onClose }: SideboxProps) {
       >
         <FaAngleLeft sx={{ fontSize: 4, marginTop: 1 }} />
       </button>
-      <h1 sx={{ fontSize: 5, marginBottom: 3 }}>🏄 Language Surf</h1>
+      <h1 sx={{ fontSize: 6, marginBottom: 2 }}>🏄 Language Surf</h1>
       <p sx={{ marginBottom: 0 }}>
         Surf among 500+ different programming languages! Supports various
         visualization methods.
@@ -50,6 +62,18 @@ export default function Sidebox({ visible, onClose }: SideboxProps) {
         Arrows in the network represent paradigm influence relationship between
         two programming languages.
       </p>
+      <h2>Layout</h2>
+      <Select<Layout>
+        sx={{ width: "100%" }}
+        options={[
+          { label: "Force-based layout", value: "force" },
+          { label: "Random layout", value: "random" },
+        ]}
+        value={layout}
+        onChange={(e) => onChangeLayout((e as any).value)}
+        clearable={false}
+        searchable={false}
+      />
     </aside>
   );
 }
