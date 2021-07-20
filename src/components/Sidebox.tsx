@@ -1,16 +1,19 @@
 /** @jsxImportSource theme-ui */
+import { FaAngleLeft } from "react-icons/fa";
 
 interface SideboxProps {
   visible: boolean;
+  onClose(): void;
 }
 
-export default function Sidebox({ visible }: SideboxProps) {
+export default function Sidebox({ visible, onClose }: SideboxProps) {
   return (
     <aside
       sx={{
         position: "absolute",
         top: 0,
         left: 0,
+        zIndex: 1,
         backgroundColor: "background",
         width: "23rem",
         height: "100%",
@@ -23,6 +26,21 @@ export default function Sidebox({ visible }: SideboxProps) {
         transition: "transform 0.3s",
       }}
     >
+      <button
+        onClick={onClose}
+        sx={{
+          cursor: "pointer",
+          appearance: "none",
+          width: "100%",
+          padding: 1,
+          backgroundColor: "#f1f3f5",
+          border: "2px solid #dee2e6",
+          borderRadius: 5,
+          color: "#868e96",
+        }}
+      >
+        <FaAngleLeft sx={{ fontSize: 4, marginTop: 1 }} />
+      </button>
       <h1 sx={{ fontSize: 5, marginBottom: 3 }}>🏄 Language Surf</h1>
       <p sx={{ marginBottom: 0 }}>
         Surf among 500+ different programming languages! Supports various

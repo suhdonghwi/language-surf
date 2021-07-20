@@ -133,10 +133,6 @@ export default function Network({ graph }: NetworkProps) {
         }),
         {
           duration: 100,
-          onComplete: () => {
-            console.log("refreshing");
-            //renderer.refresh();
-          },
         }
       );
     });

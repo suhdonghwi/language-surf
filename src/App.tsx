@@ -1,4 +1,5 @@
 /** @jsxImportSource theme-ui */
+import { useState } from "react";
 import { ThemeProvider } from "theme-ui";
 
 import LanguageNetwork from "./components/LanguageNetwork";
@@ -8,11 +9,13 @@ import theme from "./theme";
 import { FaBars } from "react-icons/fa";
 
 function App() {
+  const [showSidebar, setShowSidebar] = useState(false);
   return (
     <ThemeProvider theme={theme}>
       <LanguageNetwork />
-      <Sidebox visible={false} />
+      <Sidebox visible={showSidebar} onClose={() => setShowSidebar(false)} />
       <button
+        onClick={() => setShowSidebar(true)}
         sx={{
           cursor: "pointer",
           position: "absolute",
