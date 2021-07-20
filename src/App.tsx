@@ -31,11 +31,17 @@ function App() {
           appearance: "none",
           border: "none",
           borderRadius: "0 10px 10px 0",
-          backgroundColor: "primary",
-          boxShadow: "0 4px 12px 0px rgba(0,0,0,.25)",
+          boxShadow:
+            "0px 8px 17px 2px rgba(0,0,0,0.14) , 0px 3px 14px 2px rgba(0,0,0,0.12) , 0px 5px 5px -3px rgba(0,0,0,0.2) ",
           width: "3.5rem",
           height: "3.5rem",
-          color: "white",
+          backgroundColor: "gray",
+          color: "darkGray",
+          transition: "all 0.3s",
+          "&:hover": {
+            backgroundColor: "primary",
+            color: "white",
+          },
         }}
       >
         <FaBars sx={{ fontSize: 5 }} />

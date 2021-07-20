@@ -47,7 +47,7 @@ export default function Sidebox({
           backgroundColor: "#f1f3f5",
           border: "2px solid #dee2e6",
           borderRadius: 5,
-          color: "#868e96",
+          color: "darkGray",
         }}
       >
         <FaAngleLeft sx={{ fontSize: 4, marginTop: 1 }} />

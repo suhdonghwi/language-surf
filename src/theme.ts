@@ -6,6 +6,8 @@ const theme = {
     textSecondary: "#ced4da",
     background: "#f8f9fa",
     primary: "#74c0fc",
+    gray: "#dee2e6",
+    darkGray: "#868e96",
   },
 };
 
