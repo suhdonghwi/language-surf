@@ -29,18 +29,19 @@ function App() {
           top: 3,
           left: 0,
           appearance: "none",
-          border: "none",
+          borderWidth: "2px 2px 2px 0",
+          borderStyle: "solid",
+          borderColor: "gray",
           borderRadius: "0 10px 10px 0",
-          boxShadow:
-            "0px 8px 17px 2px rgba(0,0,0,0.14) , 0px 3px 14px 2px rgba(0,0,0,0.12) , 0px 5px 5px -3px rgba(0,0,0,0.2) ",
+          color: "darkGray",
+          backgroundColor: "lightGray",
           width: "3.5rem",
           height: "3.5rem",
-          backgroundColor: "gray",
-          color: "darkGray",
           transition: "all 0.3s",
           "&:hover": {
             backgroundColor: "primary",
             color: "white",
+            borderColor: "#a5d8ff",
           },
         }}
       >

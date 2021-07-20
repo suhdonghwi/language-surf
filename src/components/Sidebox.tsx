@@ -44,8 +44,10 @@ export default function Sidebox({
           appearance: "none",
           width: "100%",
           padding: 1,
-          backgroundColor: "#f1f3f5",
-          border: "2px solid #dee2e6",
+          backgroundColor: "lightGray",
+          borderWidth: "2px",
+          borderStyle: "solid",
+          borderColor: "gray",
           borderRadius: 5,
           color: "darkGray",
         }}
