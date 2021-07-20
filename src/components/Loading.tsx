@@ -12,6 +12,7 @@ export default function Loading() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flexDirection: "column",
       }}
     >
       <ClimbingBoxLoader
@@ -21,6 +22,9 @@ export default function Loading() {
         css=""
         speedMultiplier={1}
       />
+      <p sx={{ color: "primary", fontWeight: 600, fontSize: 4 }}>
+        Loading data...
+      </p>
     </div>
   );
 }

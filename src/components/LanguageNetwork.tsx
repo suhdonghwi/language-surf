@@ -61,8 +61,7 @@ export default function LanguageNetwork({ layout }: LanguageNetworkProps) {
     }
 
     async function setData() {
-      const result = await calculateLayouts();
-      setLayoutData(result);
+      setLayoutData(await calculateLayouts());
     }
 
     setData();
