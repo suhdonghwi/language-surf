@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { DirectedGraph } from "graphology";
 import { random } from "graphology-layout";
@@ -41,10 +41,11 @@ export default function LanguageNetwork({ layout }: LanguageNetworkProps) {
     LayoutMapping
   > | null>(null);
 
-  const layoutMapping = useMemo(() => {
-    if (layout === "force") {
-      const temp = graph.copy();
+  useEffect(() => {
+    async function calculateLayouts(): Promise<Record<Layout, LayoutMapping>> {
+      const randomLayout = random(graph, { center: 0, scale: 100 });
 
+      const temp = graph.copy();
       random.assign(temp, { center: 0, scale: 100 });
       forceAtlas2.assign(temp, {
         iterations: 100,
@@ -54,17 +55,22 @@ export default function LanguageNetwork({ layout }: LanguageNetworkProps) {
           adjustSizes: true,
         },
       });
-      return noverlap(temp, 100);
-    } else if (layout === "random") {
-      return random(graph, { center: 0, scale: 100 });
+      const forceLayout = noverlap(temp, 100);
+
+      return { force: forceLayout, random: randomLayout };
     }
 
-    return {};
-  }, [graph, layout]);
+    async function setData() {
+      const result = await calculateLayouts();
+      setLayoutData(result);
+    }
+
+    setData();
+  }, [graph]);
 
   return layoutData === null ? (
     <Loading />
   ) : (
-    <Network graph={graph} layoutMapping={layoutMapping} />
+    <Network graph={graph} layoutMapping={layoutData[layout]} />
   );
 }

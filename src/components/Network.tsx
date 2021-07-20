@@ -132,10 +132,7 @@ export default function Network({ graph, layoutMapping }: NetworkProps) {
 
     animate(
       graph,
-      (key) => ({
-        x: layoutMapping[key].x,
-        y: layoutMapping[key].y,
-      }),
+      (key) => layoutMapping[key],
       () => ({}),
       { duration: 1000 }
     );
