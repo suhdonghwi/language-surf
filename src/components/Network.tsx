@@ -134,7 +134,11 @@ export default function Network({ graph, layoutMapping }: NetworkProps) {
       graph,
       (key) => layoutMapping[key],
       () => ({}),
-      { duration: 1000 }
+      {
+        duration: 1000,
+        easing: (t: number) =>
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+      }
     );
   }, [graph, layoutMapping]);
 

@@ -3,6 +3,7 @@ import * as d3 from "d3-interpolate";
 
 interface AnimationOptions {
   duration: number;
+  easing?(t: number): number;
   onComplete?(): void;
 }
 
@@ -37,6 +38,7 @@ export default function animate<T1, T2>(
   let frame: number | null = null;
   const step = () => {
     let progress = (Date.now() - start) / options.duration;
+    if (options.easing !== undefined) progress = options.easing(progress);
 
     if (progress >= 1) {
       graph.updateEachNodeAttributes((key) => nodeTargetAttrs[key]);
