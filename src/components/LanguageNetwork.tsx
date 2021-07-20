@@ -43,7 +43,7 @@ export default function LanguageNetwork({ layout }: LanguageNetworkProps) {
 
   useEffect(() => {
     async function calculateLayouts(): Promise<Record<Layout, LayoutMapping>> {
-      const randomLayout = random(graph, { center: 0, scale: 100 });
+      const randomLayout = random(graph, { center: 0, scale: 500 });
 
       const temp = graph.copy();
       random.assign(temp, { center: 0, scale: 100 });
