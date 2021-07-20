@@ -1,5 +1,4 @@
 /** @jsxImportSource theme-ui */
-import { useState } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import Select from "react-virtualized-select";
 
@@ -7,18 +6,18 @@ import Layout from "../data/Layout";
 
 interface SideboxProps {
   visible: boolean;
+  layout: Layout;
+
+  onChangeLayout(newLayout: Layout): void;
   onClose(): void;
 }
 
-export default function Sidebox({ visible, onClose }: SideboxProps) {
-  const [layout, setLayout] = useState<Layout>("force");
-
-  function onChangeLayout(newLayout: Layout) {
-    if (layout === newLayout) return;
-
-    setLayout(newLayout);
-  }
-
+export default function Sidebox({
+  visible,
+  layout,
+  onChangeLayout,
+  onClose,
+}: SideboxProps) {
   return (
     <aside
       sx={{

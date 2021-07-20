@@ -1,19 +1,26 @@
 /** @jsxImportSource theme-ui */
 import { useState } from "react";
 import { ThemeProvider } from "theme-ui";
+import { FaBars } from "react-icons/fa";
 
+import theme from "./theme";
 import LanguageNetwork from "./components/LanguageNetwork";
 import Sidebox from "./components/Sidebox";
-import theme from "./theme";
-
-import { FaBars } from "react-icons/fa";
+import Layout from "./data/Layout";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [layout, setLayout] = useState<Layout>("force");
+
   return (
     <ThemeProvider theme={theme}>
       <LanguageNetwork />
-      <Sidebox visible={showSidebar} onClose={() => setShowSidebar(false)} />
+      <Sidebox
+        visible={showSidebar}
+        onClose={() => setShowSidebar(false)}
+        layout={layout}
+        onChangeLayout={(l) => setLayout(l)}
+      />
       <button
         onClick={() => setShowSidebar(true)}
         sx={{
