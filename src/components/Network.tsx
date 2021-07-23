@@ -128,16 +128,14 @@ export default function Network({ graph, layoutMapping }: NetworkProps) {
   }, [graph]);
 
   useEffect(() => {
-    console.log("animating");
-
     animate(
       graph,
       (key) => layoutMapping[key],
       () => ({}),
       {
-        duration: 1000,
+        duration: 1500,
         easing: (t: number) =>
-          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, // easeInOutCubic
       }
     );
   }, [graph, layoutMapping]);
