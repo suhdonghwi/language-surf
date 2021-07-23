@@ -74,13 +74,13 @@ export default function Network({ graph, layoutMapping }: NetworkProps) {
           if (influencedToEdges.has(key)) {
             return {
               color: "#1c7ed6",
-              size: 1.5,
+              size: 2,
               z: 99,
             };
           } else if (influencedByEdges.has(key)) {
             return {
               color: "#f03e3e",
-              size: 1.5,
+              size: 2,
               z: 99,
             };
           } else {
