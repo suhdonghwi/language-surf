@@ -1,20 +1,19 @@
 /** @jsxImportSource theme-ui */
 import { FaAngleLeft } from "react-icons/fa";
 import Select from "react-virtualized-select";
-
-import Layout from "../data/Layout";
+import layouts from "../data/Layout";
 
 interface SideboxProps {
   visible: boolean;
-  layout: Layout;
+  layoutIndex: number;
 
-  onChangeLayout(newLayout: Layout): void;
+  onChangeLayout(newIndex: number): void;
   onClose(): void;
 }
 
 export default function Sidebox({
   visible,
-  layout,
+  layoutIndex,
   onChangeLayout,
   onClose,
 }: SideboxProps) {
@@ -64,13 +63,10 @@ export default function Sidebox({
         two programming languages.
       </p>
       <h2>Layout</h2>
-      <Select<Layout>
+      <Select<number>
         sx={{ width: "100%" }}
-        options={[
-          { label: "Force-based layout", value: "force" },
-          { label: "Random layout", value: "random" },
-        ]}
-        value={layout}
+        options={layouts.map((l, i) => ({ label: l.name(), value: i }))}
+        value={layoutIndex}
         onChange={(e) => onChangeLayout((e as any).value)}
         clearable={false}
         searchable={false}

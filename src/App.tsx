@@ -6,20 +6,19 @@ import { FaBars } from "react-icons/fa";
 import theme from "./theme";
 import LanguageNetwork from "./components/LanguageNetwork";
 import Sidebox from "./components/Sidebox";
-import Layout from "./data/Layout";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [layout, setLayout] = useState<Layout>("force");
+  const [layoutIndex, setLayoutIndex] = useState(0);
 
   return (
     <ThemeProvider theme={theme}>
-      <LanguageNetwork layout={layout} />
+      <LanguageNetwork layoutIndex={layoutIndex} />
       <Sidebox
         visible={showSidebar}
         onClose={() => setShowSidebar(false)}
-        layout={layout}
-        onChangeLayout={(l) => setLayout(l)}
+        layoutIndex={layoutIndex}
+        onChangeLayout={(l) => setLayoutIndex(l)}
       />
       <button
         onClick={() => setShowSidebar(true)}
