@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-
 import { DirectedGraph } from "graphology";
 
 import { languageData, influenceData } from "../data/Language";
-import Network from "./Network";
-import NodeAttribute from "../data/NodeAttribute";
 import layouts, { LayoutResult } from "../data/Layout";
+import NodeAttribute from "../data/NodeAttribute";
+import Network from "./Network";
 import Loading from "./Loading";
 
 interface LanguageNetworkProps {

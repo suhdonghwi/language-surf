@@ -1,8 +1,11 @@
+import { DirectedGraph } from "graphology";
+
 import Language from "./Language";
 
 export default interface NodeAttribute {
   x?: number;
   y?: number;
+  hidden?: boolean;
 
   size?: number;
   label?: string;
@@ -10,3 +13,5 @@ export default interface NodeAttribute {
 
   lang: Language;
 }
+
+export type LanguageGraph = DirectedGraph<NodeAttribute>;

@@ -130,7 +130,10 @@ export default function Network({ graph, layoutMapping }: NetworkProps) {
   useEffect(() => {
     animate(
       graph,
-      (key) => layoutMapping[key],
+      (key) =>
+        layoutMapping[key] === undefined
+          ? { hidden: true }
+          : { hidden: false, ...layoutMapping[key] },
       () => ({}),
       {
         duration: 1500,
