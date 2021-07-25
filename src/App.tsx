@@ -10,6 +10,7 @@ import Sidebox from "./components/Sidebox";
 function App() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [layoutIndex, setLayoutIndex] = useState(0);
+  const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
 
   return (
     <ThemeProvider theme={theme}>
@@ -18,6 +19,7 @@ function App() {
         visible={showSidebar}
         onClose={() => setShowSidebar(false)}
         layoutIndex={layoutIndex}
+        selectedLanguage={selectedLanguage}
         onChangeLayout={(l) => setLayoutIndex(l)}
       />
       <button

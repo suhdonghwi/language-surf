@@ -18,7 +18,7 @@ export default function Loading() {
       <ClimbingBoxLoader
         loading
         size={20}
-        color={themeUI.theme.colors!.primary!.toString()}
+        color={`${themeUI.theme.colors!.primary}`}
         css=""
         speedMultiplier={1}
       />

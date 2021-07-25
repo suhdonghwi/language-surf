@@ -6,17 +6,42 @@ import layouts from "../data/Layout";
 interface SideboxProps {
   visible: boolean;
   layoutIndex: number;
+  selectedLanguage: number | null;
 
   onChangeLayout(newIndex: number): void;
   onClose(): void;
 }
 
-export default function Sidebox({
-  visible,
-  layoutIndex,
-  onChangeLayout,
-  onClose,
-}: SideboxProps) {
+function HomePage({ layoutIndex, onChangeLayout }: SideboxProps) {
+  return (
+    <>
+      <h1 sx={{ fontSize: 6, marginBottom: 2 }}>🏄 Language Surf</h1>
+      <p sx={{ marginBottom: 0 }}>
+        Surf among 500+ different programming languages! Supports various
+        visualization methods.
+      </p>
+      <p>
+        Arrows in the network represent paradigm influence relationship between
+        two programming languages.
+      </p>
+      <h2>Layout</h2>
+      <Select<number>
+        sx={{ width: "100%" }}
+        options={layouts.map((l, i) => ({ label: l.name(), value: i }))}
+        value={layoutIndex}
+        onChange={(e) => onChangeLayout((e as any).value)}
+        clearable={false}
+        searchable={false}
+      />
+    </>
+  );
+}
+
+function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {}
+
+export default function Sidebox(props: SideboxProps) {
+  const { visible, selectedLanguage, onClose } = props;
+
   return (
     <aside
       sx={{
@@ -50,24 +75,7 @@ export default function Sidebox({
       >
         <FaAngleLeft sx={{ fontSize: 4, marginTop: 1 }} />
       </button>
-      <h1 sx={{ fontSize: 6, marginBottom: 2 }}>🏄 Language Surf</h1>
-      <p sx={{ marginBottom: 0 }}>
-        Surf among 500+ different programming languages! Supports various
-        visualization methods.
-      </p>
-      <p>
-        Arrows in the network represent paradigm influence relationship between
-        two programming languages.
-      </p>
-      <h2>Layout</h2>
-      <Select<number>
-        sx={{ width: "100%" }}
-        options={layouts.map((l, i) => ({ label: l.name(), value: i }))}
-        value={layoutIndex}
-        onChange={(e) => onChangeLayout((e as any).value)}
-        clearable={false}
-        searchable={false}
-      />
+      {selectedLanguage === null ? <HomePage {...props} /> : <></>}
     </aside>
   );
 }
