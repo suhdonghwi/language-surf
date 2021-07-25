@@ -60,7 +60,7 @@ const layouts = [
 
       let i = 0;
       for (const lang of langs) {
-        mapping[lang] = { x: (Number(year) - 1984) * 10, y: i * 10 };
+        mapping[lang] = { y: (1984 - Number(year)) * 10, x: i * 10 };
         i--;
       }
     }
