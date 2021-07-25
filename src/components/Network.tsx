@@ -10,9 +10,15 @@ import { LayoutMapping } from "../data/Layout";
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
   layoutMapping: LayoutMapping;
+
+  onClick(id: number): void;
 }
 
-export default function Network({ graph, layoutMapping }: NetworkProps) {
+export default function Network({
+  graph,
+  layoutMapping,
+  onClick,
+}: NetworkProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -122,10 +128,14 @@ export default function Network({ graph, layoutMapping }: NetworkProps) {
       );
     });
 
+    renderer.on("clickNode", (e) => {
+      onClick(Number(e.node));
+    });
+
     return () => {
       renderer.kill();
     };
-  }, [graph]);
+  }, [graph, onClick]);
 
   useEffect(() => {
     animate(

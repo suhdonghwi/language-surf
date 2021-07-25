@@ -1,6 +1,7 @@
 /** @jsxImportSource theme-ui */
 import { FaAngleLeft } from "react-icons/fa";
 import Select from "react-virtualized-select";
+import { languageData } from "../data/Language";
 import layouts from "../data/Layout";
 
 interface SideboxProps {
@@ -37,7 +38,15 @@ function HomePage({ layoutIndex, onChangeLayout }: SideboxProps) {
   );
 }
 
-function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {}
+function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
+  return (
+    <>
+      <h1 sx={{ fontSize: 5, marginBottom: 2 }}>
+        {languageData[selectedLanguage].label}
+      </h1>
+    </>
+  );
+}
 
 export default function Sidebox(props: SideboxProps) {
   const { visible, selectedLanguage, onClose } = props;
@@ -75,7 +84,11 @@ export default function Sidebox(props: SideboxProps) {
       >
         <FaAngleLeft sx={{ fontSize: 4, marginTop: 1 }} />
       </button>
-      {selectedLanguage === null ? <HomePage {...props} /> : <></>}
+      {selectedLanguage === null ? (
+        <HomePage {...props} />
+      ) : (
+        <LanguagePage selectedLanguage={selectedLanguage} />
+      )}
     </aside>
   );
 }

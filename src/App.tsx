@@ -12,9 +12,13 @@ function App() {
   const [layoutIndex, setLayoutIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
 
+  function onClickNode(id: number) {
+    setSelectedLanguage(id);
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <LanguageNetwork layoutIndex={layoutIndex} />
+      <LanguageNetwork layoutIndex={layoutIndex} onClick={onClickNode} />
       <Sidebox
         visible={showSidebar}
         onClose={() => setShowSidebar(false)}

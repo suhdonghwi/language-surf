@@ -9,9 +9,13 @@ import Loading from "./Loading";
 
 interface LanguageNetworkProps {
   layoutIndex: number;
+  onClick(id: number): void;
 }
 
-export default function LanguageNetwork({ layoutIndex }: LanguageNetworkProps) {
+export default function LanguageNetwork({
+  layoutIndex,
+  onClick,
+}: LanguageNetworkProps) {
   const graph = useMemo(() => {
     const g = new DirectedGraph<NodeAttribute>();
 
@@ -54,6 +58,10 @@ export default function LanguageNetwork({ layoutIndex }: LanguageNetworkProps) {
   return layoutData === null ? (
     <Loading />
   ) : (
-    <Network graph={graph} layoutMapping={layoutData[layoutIndex].mapping} />
+    <Network
+      graph={graph}
+      layoutMapping={layoutData[layoutIndex].mapping}
+      onClick={onClick}
+    />
   );
 }
