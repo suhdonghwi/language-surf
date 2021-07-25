@@ -44,7 +44,7 @@ const layouts = [
   }),
   new Layout("Random layout", (g) => random(g, { center: 0, scale: 500 })),
   new Layout("Timeline layout", (g) => {
-    const languageMap: Record<number, [string]> = {};
+    const languageMap: Record<number, string[]> = {};
     g.forEachNode((key) => {
       const inception = g.getNodeAttributes(key).lang.inception;
       if (inception === null || inception.precision !== 9) return;
@@ -56,9 +56,12 @@ const layouts = [
 
     const mapping: LayoutMapping = {};
     for (const [year, langs] of Object.entries(languageMap)) {
+      langs.sort((a, b) => g.outDegree(b) - g.outDegree(a));
+
+      let i = 0;
       for (const lang of langs) {
-        console.log(Number(year));
-        mapping[lang] = { x: (Number(year) - 1900) * 50, y: 0 };
+        mapping[lang] = { x: (Number(year) - 1984) * 10, y: i * 10 };
+        i--;
       }
     }
 
