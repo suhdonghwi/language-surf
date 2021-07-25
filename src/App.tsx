@@ -27,20 +27,13 @@ function App() {
           position: "absolute",
           top: 3,
           left: 0,
-          appearance: "none",
+          variant: "buttons.normal",
           borderWidth: "2px 2px 2px 0",
-          borderStyle: "solid",
-          borderColor: "gray",
           borderRadius: "0 10px 10px 0",
-          color: "darkGray",
-          backgroundColor: "lightGray",
           width: "3.5rem",
           height: "3.5rem",
-          transition: "all 0.3s",
           "&:hover": {
-            backgroundColor: "primary",
-            color: "white",
-            borderColor: "#a5d8ff",
+            variant: "buttons.hover",
           },
         }}
       >

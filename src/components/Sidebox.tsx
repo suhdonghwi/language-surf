@@ -40,15 +40,12 @@ export default function Sidebox({
         onClick={onClose}
         sx={{
           cursor: "pointer",
-          appearance: "none",
           width: "100%",
           padding: 1,
-          backgroundColor: "lightGray",
-          borderWidth: "2px",
-          borderStyle: "solid",
-          borderColor: "gray",
-          borderRadius: 5,
-          color: "darkGray",
+          variant: "buttons.normal",
+          "&:hover": {
+            variant: "buttons.hover",
+          },
         }}
       >
         <FaAngleLeft sx={{ fontSize: 4, marginTop: 1 }} />
