@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ThemeProvider } from "theme-ui";
 import { FaBars } from "react-icons/fa";
 
@@ -12,9 +12,9 @@ function App() {
   const [layoutIndex, setLayoutIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
 
-  function onClickNode(id: number) {
+  const onClickNode = useCallback((id: number) => {
     setSelectedLanguage(id);
-  }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
