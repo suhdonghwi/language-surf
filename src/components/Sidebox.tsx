@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 
 import { languageData } from "../data/Language";
 import layouts from "../data/Layout";
-import { Themed } from "theme-ui";
+import { Themed as themed } from "theme-ui";
 
 function cutSentences(input: string, n: number) {
   let result = "",
@@ -44,7 +44,7 @@ function HomePage({
 }: SideboxProps) {
   return (
     <>
-      <Themed.h1 sx={{ marginBottom: 3 }}>🏄 Language Surf</Themed.h1>
+      <themed.h1 sx={{ marginBottom: 3 }}>🏄 Language Surf</themed.h1>
       <p sx={{ marginBottom: 0 }}>
         Surf among 500+ different programming languages! Supports various
         visualization methods.
@@ -53,7 +53,7 @@ function HomePage({
         Arrows in the network represent paradigm influence relationship between
         two programming languages.
       </p>
-      <Themed.h2>🧩 Layout</Themed.h2>
+      <themed.h2>🧩 Layout</themed.h2>
       <Select<number>
         sx={{ width: "100%" }}
         options={layouts.map((l, i) => ({ label: l.name(), value: i }))}
@@ -62,7 +62,7 @@ function HomePage({
         clearable={false}
         searchable={false}
       />
-      <Themed.h2>🔎 Search for languages</Themed.h2>
+      <themed.h2>🔎 Search for languages</themed.h2>
       <Select<number>
         sx={{ width: "100%" }}
         options={Object.entries(languageData).map(([id, lang]) => ({
@@ -81,9 +81,9 @@ function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
 
   return (
     <>
-      <Themed.h1 sx={{ fontSize: 5, marginBottom: 2, textAlign: "center" }}>
+      <themed.h1 sx={{ fontSize: 5, marginBottom: 2, textAlign: "center" }}>
         {lang.label}
-      </Themed.h1>
+      </themed.h1>
       <ReactMarkdown>{cutSentences(lang.description, 2)}</ReactMarkdown>
     </>
   );
