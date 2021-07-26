@@ -3,6 +3,8 @@ import influenceJson from "./json/influence.json";
 
 export default interface Language {
   label: string;
+  description: string;
+
   wikipedia_pageid: number;
   inception: {
     time: Date;

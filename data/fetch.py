@@ -224,9 +224,10 @@ def serialize_language(language_list):
             "inception": lang.inception,
             "paradigm": list(map(lambda p: p.id, lang.paradigm)),
             "typing": list(map(lambda t: t.id, lang.typing_discipline)),
+            "description": lang.description,
         }
 
-    return json.dumps(result)
+    return json.dumps(result, ensure_ascii=False)
 
 
 def serialize_influence(language_list):

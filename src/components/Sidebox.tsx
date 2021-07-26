@@ -44,6 +44,10 @@ function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
       <h1 sx={{ fontSize: 5, marginBottom: 2, textAlign: "center" }}>
         {languageData[selectedLanguage].label}
       </h1>
+      <p>
+        Arrows in the network represent paradigm influence relationship between
+        two programming languages.
+      </p>
     </>
   );
 }
