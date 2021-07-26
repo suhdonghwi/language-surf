@@ -12,6 +12,11 @@ function App() {
   const [layoutIndex, setLayoutIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
 
+  const onClose = useCallback(() => {
+    if (selectedLanguage === null) setShowSidebar(false);
+    else setSelectedLanguage(null);
+  }, [selectedLanguage]);
+
   const onClickNode = useCallback((id: number) => {
     setSelectedLanguage(id);
     setShowSidebar(true);
@@ -22,7 +27,7 @@ function App() {
       <LanguageNetwork layoutIndex={layoutIndex} onClick={onClickNode} />
       <Sidebox
         visible={showSidebar}
-        onClose={() => setShowSidebar(false)}
+        onClose={onClose}
         layoutIndex={layoutIndex}
         selectedLanguage={selectedLanguage}
         onChangeLayout={(l) => setLayoutIndex(l)}

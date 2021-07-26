@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleLeft, FaTimes } from "react-icons/fa";
 import Select from "react-virtualized-select";
 import ReactMarkdown from "react-markdown";
 
@@ -101,13 +101,18 @@ export default function Sidebox(props: SideboxProps) {
           cursor: "pointer",
           width: "100%",
           padding: 1,
+          fontSize: 4,
           variant: "buttons.normal",
           "&:hover": {
             variant: "buttons.hover",
           },
         }}
       >
-        <FaAngleLeft sx={{ fontSize: 4, marginTop: 1 }} />
+        {selectedLanguage === null ? (
+          <FaTimes sx={{ marginTop: 1 }} />
+        ) : (
+          <FaAngleLeft sx={{ marginTop: 1 }} />
+        )}
       </button>
       {selectedLanguage === null ? (
         <HomePage {...props} />
