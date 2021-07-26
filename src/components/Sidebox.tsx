@@ -41,7 +41,7 @@ function HomePage({ layoutIndex, onChangeLayout }: SideboxProps) {
 function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
   return (
     <>
-      <h1 sx={{ fontSize: 5, marginBottom: 2 }}>
+      <h1 sx={{ fontSize: 5, marginBottom: 2, textAlign: "center" }}>
         {languageData[selectedLanguage].label}
       </h1>
     </>
