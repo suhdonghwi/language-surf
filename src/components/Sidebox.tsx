@@ -1,8 +1,30 @@
 /** @jsxImportSource theme-ui */
 import { FaAngleLeft } from "react-icons/fa";
 import Select from "react-virtualized-select";
+import ReactMarkdown from "react-markdown";
+
 import { languageData } from "../data/Language";
 import layouts from "../data/Layout";
+
+function cutSentences(input: string, n: number) {
+  let result = "",
+    temp = "";
+  let count = 0;
+  for (const ch of input) {
+    temp += ch;
+    if (ch === "." && temp.length > 10) {
+      result += temp;
+      temp = "";
+      count++;
+
+      if (count >= n) {
+        return result;
+      }
+    }
+  }
+
+  return input;
+}
 
 interface SideboxProps {
   visible: boolean;
@@ -39,15 +61,14 @@ function HomePage({ layoutIndex, onChangeLayout }: SideboxProps) {
 }
 
 function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
+  const lang = languageData[selectedLanguage];
+
   return (
     <>
       <h1 sx={{ fontSize: 5, marginBottom: 2, textAlign: "center" }}>
-        {languageData[selectedLanguage].label}
+        {lang.label}
       </h1>
-      <p>
-        Arrows in the network represent paradigm influence relationship between
-        two programming languages.
-      </p>
+      <ReactMarkdown>{cutSentences(lang.description, 2)}</ReactMarkdown>
     </>
   );
 }
