@@ -14,6 +14,7 @@ function App() {
 
   const onClickNode = useCallback((id: number) => {
     setSelectedLanguage(id);
+    setShowSidebar(true);
   }, []);
 
   return (
