@@ -17,20 +17,21 @@ function App() {
     else setSelectedLanguage(null);
   }, [selectedLanguage]);
 
-  const onClickNode = useCallback((id: number) => {
+  const onSelectLanguage = useCallback((id: number) => {
     setSelectedLanguage(id);
     setShowSidebar(true);
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <LanguageNetwork layoutIndex={layoutIndex} onClick={onClickNode} />
+      <LanguageNetwork layoutIndex={layoutIndex} onClick={onSelectLanguage} />
       <Sidebox
         visible={showSidebar}
         onClose={onClose}
         layoutIndex={layoutIndex}
         selectedLanguage={selectedLanguage}
-        onChangeLayout={(l) => setLayoutIndex(l)}
+        onChangeLayout={setLayoutIndex}
+        onSelectLanguage={onSelectLanguage}
       />
       <button
         onClick={() => setShowSidebar(true)}

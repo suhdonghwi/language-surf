@@ -29,6 +29,16 @@ const theme: Theme = {
       backgroundColor: "primary",
     },
   },
+  styles: {
+    h1: {
+      fontSize: 6,
+    },
+    h2: {
+      width: "100%",
+      textAlign: "left",
+      marginTop: 4,
+    },
+  },
 };
 
 export default theme;

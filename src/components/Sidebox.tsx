@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 
 import { languageData } from "../data/Language";
 import layouts from "../data/Layout";
+import { Themed } from "theme-ui";
 
 function cutSentences(input: string, n: number) {
   let result = "",
@@ -32,13 +33,18 @@ interface SideboxProps {
   selectedLanguage: number | null;
 
   onChangeLayout(newIndex: number): void;
+  onSelectLanguage(id: number): void;
   onClose(): void;
 }
 
-function HomePage({ layoutIndex, onChangeLayout }: SideboxProps) {
+function HomePage({
+  layoutIndex,
+  onChangeLayout,
+  onSelectLanguage,
+}: SideboxProps) {
   return (
     <>
-      <h1 sx={{ fontSize: 6, marginBottom: 2 }}>🏄 Language Surf</h1>
+      <Themed.h1 sx={{ marginBottom: 3 }}>🏄 Language Surf</Themed.h1>
       <p sx={{ marginBottom: 0 }}>
         Surf among 500+ different programming languages! Supports various
         visualization methods.
@@ -47,7 +53,7 @@ function HomePage({ layoutIndex, onChangeLayout }: SideboxProps) {
         Arrows in the network represent paradigm influence relationship between
         two programming languages.
       </p>
-      <h2>Layout</h2>
+      <Themed.h2>🧩 Layout</Themed.h2>
       <Select<number>
         sx={{ width: "100%" }}
         options={layouts.map((l, i) => ({ label: l.name(), value: i }))}
@@ -55,6 +61,16 @@ function HomePage({ layoutIndex, onChangeLayout }: SideboxProps) {
         onChange={(e) => onChangeLayout((e as any).value)}
         clearable={false}
         searchable={false}
+      />
+      <Themed.h2>🔎 Search for languages</Themed.h2>
+      <Select<number>
+        sx={{ width: "100%" }}
+        options={Object.entries(languageData).map(([id, lang]) => ({
+          label: lang.label,
+          value: Number(id),
+        }))}
+        onChange={(e) => onSelectLanguage((e as any).value)}
+        placeholder="Search for languages"
       />
     </>
   );
@@ -65,9 +81,9 @@ function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
 
   return (
     <>
-      <h1 sx={{ fontSize: 5, marginBottom: 2, textAlign: "center" }}>
+      <Themed.h1 sx={{ fontSize: 5, marginBottom: 2, textAlign: "center" }}>
         {lang.label}
-      </h1>
+      </Themed.h1>
       <ReactMarkdown>{cutSentences(lang.description, 2)}</ReactMarkdown>
     </>
   );
