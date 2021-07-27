@@ -14,6 +14,8 @@ function App() {
   const [searchedLanguage, setSearchedLanguage] = useState<number | null>(null);
 
   const onClose = useCallback(() => {
+    setSearchedLanguage(null);
+
     if (selectedLanguage === null) setShowSidebar(false);
     else setSelectedLanguage(null);
   }, [selectedLanguage]);
@@ -25,6 +27,7 @@ function App() {
 
   const onSearchLanguage = useCallback((id: number) => {
     setSearchedLanguage(id);
+    setSelectedLanguage(id);
   }, []);
 
   return (
