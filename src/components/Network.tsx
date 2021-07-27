@@ -51,7 +51,7 @@ export default function Network({
         graph,
         (key) => {
           if (focusKey === key) {
-            return { color: "#12b886" };
+            return { color: "#12b886", showLabel: true };
           } else if (influencedToNodes.has(key)) {
             return { color: "#1c7ed6", showLabel: true };
           } else if (influencedByNodes.has(key)) {
