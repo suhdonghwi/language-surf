@@ -11,11 +11,8 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [layoutIndex, setLayoutIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
-  const [searchedLanguage, setSearchedLanguage] = useState<number | null>(null);
 
   const onClose = useCallback(() => {
-    setSearchedLanguage(null);
-
     if (selectedLanguage === null) setShowSidebar(false);
     else setSelectedLanguage(null);
   }, [selectedLanguage]);
@@ -26,7 +23,6 @@ function App() {
   }, []);
 
   const onSearchLanguage = useCallback((id: number) => {
-    setSearchedLanguage(id);
     setSelectedLanguage(id);
   }, []);
 
@@ -35,7 +31,7 @@ function App() {
       <LanguageNetwork
         layoutIndex={layoutIndex}
         onClick={onSelectLanguage}
-        searchedLanguage={searchedLanguage}
+        selectedLanguage={selectedLanguage}
       />
       <Sidebox
         visible={showSidebar}

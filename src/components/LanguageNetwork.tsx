@@ -9,13 +9,13 @@ import Loading from "./Loading";
 
 interface LanguageNetworkProps {
   layoutIndex: number;
-  searchedLanguage: number | null;
+  selectedLanguage: number | null;
   onClick(id: number): void;
 }
 
 export default function LanguageNetwork({
   layoutIndex,
-  searchedLanguage,
+  selectedLanguage,
   onClick,
 }: LanguageNetworkProps) {
   const graph = useMemo(() => {
@@ -64,7 +64,7 @@ export default function LanguageNetwork({
       graph={graph}
       layoutMapping={layoutData[layoutIndex].mapping}
       onClick={onClick}
-      focusTo={searchedLanguage}
+      focusTo={selectedLanguage}
     />
   );
 }
