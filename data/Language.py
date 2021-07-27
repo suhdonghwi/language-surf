@@ -3,8 +3,8 @@ import re
 
 def preprocess_wikitext(s):
     s = s.replace("\n\n", "\n").replace("\n", " ")
-    s = re.sub(r"([\(\,]) ([_*])", r"\1\2", s)
-    s = re.sub(r"([_*]) ([\)\,]) ", r"\1\2", s)
+    s = re.sub(r"([\(\,\'\"]) ([\_\*])", r"\1\2", s)
+    s = re.sub(r"([\_\*]) ([\)\,\'\"])", r"\1\2", s)
     return s
 
 
