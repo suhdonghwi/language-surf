@@ -30,11 +30,11 @@ function cutSentences(input: string, n: number) {
 interface SideboxProps {
   visible: boolean;
   layoutIndex: number;
-  selectedLanguage: number | null;
+  selectedLanguage: string | null;
 
   onChangeLayout(newIndex: number): void;
-  onSelectLanguage(id: number): void;
-  onSearchLanguage(id: number): void;
+  onSelectLanguage(key: string): void;
+  onSearchLanguage(key: string): void;
   onClose(): void;
 }
 
@@ -64,11 +64,11 @@ function HomePage({
         searchable={false}
       />
       <themed.h2>🔎 Search for languages</themed.h2>
-      <Select<number>
+      <Select<string>
         sx={{ width: "100%" }}
         options={Object.entries(languageData).map(([id, lang]) => ({
           label: lang.label,
-          value: Number(id),
+          value: id,
         }))}
         onChange={(e) => onSearchLanguage((e as any).value)}
         placeholder="Search for languages"
@@ -77,8 +77,8 @@ function HomePage({
   );
 }
 
-function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
-  const lang = languageData[selectedLanguage];
+function LanguagePage({ selectedLanguage }: { selectedLanguage: string }) {
+  const lang = languageData[Number(selectedLanguage)];
 
   return (
     <>

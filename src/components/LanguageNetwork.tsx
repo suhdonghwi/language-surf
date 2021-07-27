@@ -9,8 +9,8 @@ import Loading from "./Loading";
 
 interface LanguageNetworkProps {
   layoutIndex: number;
-  selectedLanguage: number | null;
-  onClick(id: number): void;
+  selectedLanguage: string | null;
+  onClick(id: string): void;
 }
 
 export default function LanguageNetwork({

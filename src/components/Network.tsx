@@ -10,9 +10,9 @@ import { LayoutMapping } from "../data/Layout";
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
   layoutMapping: LayoutMapping;
-  focusTo: number | null;
+  focusTo: string | null;
 
-  onClick(id: number): void;
+  onClick(id: string): void;
 }
 
 export default function Network({
@@ -126,24 +126,40 @@ export default function Network({
     });
     rendererRef.current = renderer;
 
-    renderer.on("enterNode", (e) => {
-      document.body.style.cursor = "pointer";
-      focusNode(e.node);
-    });
-
-    renderer.on("leaveNode", (e) => {
-      document.body.style.cursor = "default";
-      unfocusNode();
-    });
-
-    renderer.on("clickNode", (e) => {
-      onClick(Number(e.node));
-    });
-
     return () => {
       renderer.kill();
     };
-  }, [graph, onClick, focusNode, unfocusNode]);
+  }, [graph]);
+
+  useEffect(() => {
+    if (rendererRef.current === null || focusTo !== null) return;
+    const renderer = rendererRef.current;
+
+    function enterNode(e: any) {
+      document.body.style.cursor = "pointer";
+      focusNode(e.node);
+    }
+
+    function leaveNode() {
+      document.body.style.cursor = "default";
+      unfocusNode();
+    }
+
+    function clickNode(e: any) {
+      document.body.style.cursor = "default";
+      onClick(e.node);
+    }
+
+    renderer.on("enterNode", enterNode);
+    renderer.on("leaveNode", leaveNode);
+    renderer.on("clickNode", clickNode);
+
+    return () => {
+      renderer.off("enterNode", enterNode);
+      renderer.off("leaveNode", leaveNode);
+      renderer.off("clickNode", clickNode);
+    };
+  }, [focusNode, unfocusNode, onClick, focusTo]);
 
   useEffect(() => {
     animate(
@@ -162,7 +178,12 @@ export default function Network({
   }, [graph, layoutMapping]);
 
   useEffect(() => {
-    if (rendererRef.current === null || focusTo === null) return;
+    if (rendererRef.current === null || focusTo === null) {
+      unfocusNode();
+      return;
+    }
+
+    /*
     const renderer = rendererRef.current;
     const camera = renderer.getCamera();
 
@@ -174,10 +195,12 @@ export default function Network({
       renderer.getDimensions(),
       renderer.graphToViewport(graphCoords)
     );
-
-    console.log(coords);
     camera.animate({ ...coords, ratio: 0.1 });
-  }, [graph, focusTo]);
+    */
+
+    console.log(typeof focusTo);
+    focusNode(focusTo);
+  }, [graph, focusTo, focusNode, unfocusNode]);
 
   return (
     <div

@@ -10,19 +10,19 @@ import Sidebox from "./components/Sidebox";
 function App() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [layoutIndex, setLayoutIndex] = useState(0);
-  const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
 
   const onClose = useCallback(() => {
     if (selectedLanguage === null) setShowSidebar(false);
     else setSelectedLanguage(null);
   }, [selectedLanguage]);
 
-  const onSelectLanguage = useCallback((id: number) => {
+  const onSelectLanguage = useCallback((id: string) => {
     setSelectedLanguage(id);
     setShowSidebar(true);
   }, []);
 
-  const onSearchLanguage = useCallback((id: number) => {
+  const onSearchLanguage = useCallback((id: string) => {
     setSelectedLanguage(id);
   }, []);
 
