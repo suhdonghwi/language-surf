@@ -34,13 +34,14 @@ interface SideboxProps {
 
   onChangeLayout(newIndex: number): void;
   onSelectLanguage(id: number): void;
+  onSearchLanguage(id: number): void;
   onClose(): void;
 }
 
 function HomePage({
   layoutIndex,
   onChangeLayout,
-  onSelectLanguage,
+  onSearchLanguage,
 }: SideboxProps) {
   return (
     <>
@@ -69,7 +70,7 @@ function HomePage({
           label: lang.label,
           value: Number(id),
         }))}
-        onChange={(e) => onSelectLanguage((e as any).value)}
+        onChange={(e) => onSearchLanguage((e as any).value)}
         placeholder="Search for languages"
       />
     </>

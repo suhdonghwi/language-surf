@@ -10,6 +10,7 @@ import { LayoutMapping } from "../data/Layout";
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
   layoutMapping: LayoutMapping;
+  focusTo: number | null;
 
   onClick(id: number): void;
 }
@@ -17,9 +18,11 @@ interface NetworkProps {
 export default function Network({
   graph,
   layoutMapping,
+  focusTo,
   onClick,
 }: NetworkProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<Sigma | null>(null);
 
   useEffect(() => {
     if (containerRef.current === null) return;
@@ -47,6 +50,8 @@ export default function Network({
       zIndex: true,
       labelColor: "#212529",
     });
+
+    rendererRef.current = renderer;
 
     renderer.on("enterNode", (e) => {
       document.body.style.cursor = "pointer";
@@ -152,6 +157,24 @@ export default function Network({
       }
     );
   }, [graph, layoutMapping]);
+
+  useEffect(() => {
+    if (rendererRef.current === null || focusTo === null) return;
+    const renderer = rendererRef.current;
+    const camera = renderer.getCamera();
+
+    const graphCoords = {
+      x: graph.getNodeAttribute(focusTo, "x"),
+      y: graph.getNodeAttribute(focusTo, "y"),
+    };
+    const coords = camera.viewportToFramedGraph(
+      renderer.getDimensions(),
+      renderer.graphToViewport(graphCoords)
+    );
+
+    console.log(coords);
+    camera.animate({ ...coords, ratio: 0.1 });
+  }, [graph, focusTo]);
 
   return (
     <div

@@ -11,6 +11,7 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [layoutIndex, setLayoutIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
+  const [searchedLanguage, setSearchedLanguage] = useState<number | null>(null);
 
   const onClose = useCallback(() => {
     if (selectedLanguage === null) setShowSidebar(false);
@@ -22,9 +23,17 @@ function App() {
     setShowSidebar(true);
   }, []);
 
+  const onSearchLanguage = useCallback((id: number) => {
+    setSearchedLanguage(id);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <LanguageNetwork layoutIndex={layoutIndex} onClick={onSelectLanguage} />
+      <LanguageNetwork
+        layoutIndex={layoutIndex}
+        onClick={onSelectLanguage}
+        searchedLanguage={searchedLanguage}
+      />
       <Sidebox
         visible={showSidebar}
         onClose={onClose}
@@ -32,6 +41,7 @@ function App() {
         selectedLanguage={selectedLanguage}
         onChangeLayout={setLayoutIndex}
         onSelectLanguage={onSelectLanguage}
+        onSearchLanguage={onSearchLanguage}
       />
       <button
         onClick={() => setShowSidebar(true)}
