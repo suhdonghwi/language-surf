@@ -2,7 +2,14 @@ import re
 
 
 def preprocess_wikitext(s):
-    return s.replace("\n\n", "\n").replace("\n", " ")
+    return (
+        s.replace("\n\n", "\n")
+        .replace("\n", " ")
+        .replace("( _", "(_")
+        .replace("( **", "(**")
+        .replace("_ )", "_)")
+        .replace("** )", "**)")
+    )
 
 
 def find_page_names(s):
