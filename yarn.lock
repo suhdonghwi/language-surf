@@ -10544,9 +10544,9 @@ side-channel@^1.0.4:
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
 
-"sigma@ssh://git@github.com:suhdonghwi/sigma.js#v2":
+"sigma@git://github.com/suhdonghwi/sigma.js#v2":
   version "2.0.0-beta7"
-  resolved "ssh://git@github.com:suhdonghwi/sigma.js#7975940d07854c01a49e0298c0f8609c64060d95"
+  resolved "git://github.com/suhdonghwi/sigma.js#7975940d07854c01a49e0298c0f8609c64060d95"
   dependencies:
     "@yomguithereal/helpers" "^1.1.1"
     events "^3.3.0"

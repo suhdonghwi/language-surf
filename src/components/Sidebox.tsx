@@ -101,7 +101,7 @@ export default function Sidebox(props: SideboxProps) {
         left: 0,
         zIndex: 1,
         backgroundColor: "background",
-        width: "23rem",
+        width: "21rem",
         height: "100%",
         boxShadow: "0 4px 12px 0px rgba(0,0,0,.25)",
         padding: 4,
