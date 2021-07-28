@@ -24,6 +24,7 @@ function App() {
   }, []);
 
   const onSearchLanguage = useCallback((id: string) => {
+    setSelectedParadigm(null);
     setSelectedLanguage(id);
   }, []);
 

@@ -59,7 +59,7 @@ export default function Network({
           } else if (influencedByNodes.has(key)) {
             return { color: "#f03e3e", showLabel: true };
           } else {
-            return { color: defaultEdgeColor };
+            return { color: defaultEdgeColor, showLabel: false };
           }
         },
         (key) => {
@@ -185,46 +185,10 @@ export default function Network({
   }, [graph, layoutMapping]);
 
   useEffect(() => {
-    if (rendererRef.current === null || focusTo === null) {
-      unfocusNode();
-      return;
-    }
-
-    /*
-    const renderer = rendererRef.current;
-    const camera = renderer.getCamera();
-
-    const graphCoords = {
-      x: graph.getNodeAttribute(focusTo, "x"),
-      y: graph.getNodeAttribute(focusTo, "y"),
-    };
-    const coords = camera.viewportToFramedGraph(
-      renderer.getDimensions(),
-      renderer.graphToViewport(graphCoords)
-    );
-    camera.animate({ ...coords, ratio: 0.1 });
-    */
-
-    console.log(typeof focusTo);
-    focusNode(focusTo);
-  }, [graph, focusTo, focusNode, unfocusNode]);
-
-  useEffect(() => {
-    if (rendererRef.current === null) return;
+    if (rendererRef.current === null || focusTo !== null) return;
 
     if (highlights.length === 0) {
-      rendererRef.current.setSetting("labelManual", false);
-
-      animate(
-        graph,
-        () => ({ color: defaultNodeColor, showLabel: undefined }),
-        () => ({
-          color: defaultEdgeColor,
-          size: 1,
-          z: 0,
-        }),
-        { duration: 100 }
-      );
+      unfocusNode();
     } else {
       rendererRef.current.setSetting("labelManual", true);
 
@@ -245,7 +209,16 @@ export default function Network({
         { duration: 100 }
       );
     }
-  }, [highlights, graph]);
+  }, [highlights, graph, focusTo, unfocusNode]);
+
+  useEffect(() => {
+    if (rendererRef.current === null || focusTo === null) {
+      unfocusNode();
+      return;
+    }
+
+    focusNode(focusTo);
+  }, [graph, focusTo, focusNode, unfocusNode]);
 
   return (
     <div
