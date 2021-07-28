@@ -10,12 +10,15 @@ import Loading from "./Loading";
 interface LanguageNetworkProps {
   layoutIndex: number;
   selectedLanguage: string | null;
+  selectedParadigm: string | null;
+
   onClick(id: string): void;
 }
 
 export default function LanguageNetwork({
   layoutIndex,
   selectedLanguage,
+  selectedParadigm,
   onClick,
 }: LanguageNetworkProps) {
   const graph = useMemo(() => {
@@ -39,6 +42,7 @@ export default function LanguageNetwork({
   }, []);
 
   const [layoutData, setLayoutData] = useState<LayoutResult[] | null>(null);
+  const [highlights, setHighlights] = useState<string[]>([]);
 
   useEffect(() => {
     async function calculateLayouts(): Promise<LayoutResult[]> {
@@ -57,6 +61,19 @@ export default function LanguageNetwork({
     setData();
   }, [graph]);
 
+  useEffect(() => {
+    if (selectedParadigm === null) {
+      setHighlights([]);
+      return;
+    }
+
+    setHighlights(
+      Object.entries(languageData)
+        .filter(([_, l]) => l.paradigm.includes(Number(selectedParadigm)))
+        .map(([key, _]) => key)
+    );
+  }, [selectedParadigm]);
+
   return layoutData === null ? (
     <Loading />
   ) : (
@@ -65,6 +82,7 @@ export default function LanguageNetwork({
       layoutMapping={layoutData[layoutIndex].mapping}
       onClick={onClick}
       focusTo={selectedLanguage}
+      highlights={highlights}
     />
   );
 }

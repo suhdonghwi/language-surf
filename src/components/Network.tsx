@@ -11,6 +11,7 @@ interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
   layoutMapping: LayoutMapping;
   focusTo: string | null;
+  highlights: string[];
 
   onClick(id: string): void;
 }
@@ -19,6 +20,7 @@ export default function Network({
   graph,
   layoutMapping,
   focusTo,
+  highlights,
   onClick,
 }: NetworkProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -88,8 +90,8 @@ export default function Network({
   );
 
   const unfocusNode = useCallback(() => {
-    if (rendererRef.current !== null)
-      rendererRef.current.setSetting("labelManual", false);
+    if (rendererRef.current === null) return;
+    rendererRef.current.setSetting("labelManual", false);
 
     animate(
       graph,
@@ -132,7 +134,12 @@ export default function Network({
   }, [graph]);
 
   useEffect(() => {
-    if (rendererRef.current === null || focusTo !== null) return;
+    if (
+      rendererRef.current === null ||
+      focusTo !== null ||
+      highlights.length > 0
+    )
+      return;
     const renderer = rendererRef.current;
 
     function enterNode(e: any) {
@@ -159,7 +166,7 @@ export default function Network({
       renderer.off("leaveNode", leaveNode);
       renderer.off("clickNode", clickNode);
     };
-  }, [focusNode, unfocusNode, onClick, focusTo]);
+  }, [focusNode, unfocusNode, onClick, focusTo, highlights]);
 
   useEffect(() => {
     animate(
@@ -201,6 +208,44 @@ export default function Network({
     console.log(typeof focusTo);
     focusNode(focusTo);
   }, [graph, focusTo, focusNode, unfocusNode]);
+
+  useEffect(() => {
+    if (rendererRef.current === null) return;
+
+    if (highlights.length === 0) {
+      rendererRef.current.setSetting("labelManual", false);
+
+      animate(
+        graph,
+        () => ({ color: defaultNodeColor, showLabel: undefined }),
+        () => ({
+          color: defaultEdgeColor,
+          size: 1,
+          z: 0,
+        }),
+        { duration: 100 }
+      );
+    } else {
+      rendererRef.current.setSetting("labelManual", true);
+
+      animate(
+        graph,
+        (key) => {
+          if (highlights.includes(key)) {
+            return { color: "#12b886", showLabel: true };
+          } else {
+            return { color: defaultEdgeColor, showLabel: false };
+          }
+        },
+        () => ({
+          color: defaultEdgeColor,
+          size: 1,
+          z: 0,
+        }),
+        { duration: 100 }
+      );
+    }
+  }, [highlights, graph]);
 
   return (
     <div

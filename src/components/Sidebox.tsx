@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { languageData } from "../data/Language";
 import layouts from "../data/Layout";
 import { Themed as themed } from "theme-ui";
+import { paradigmData } from "../data/Paradigm";
 
 function cutSentences(input: string, n: number) {
   let result = "",
@@ -31,17 +32,21 @@ interface SideboxProps {
   visible: boolean;
   layoutIndex: number;
   selectedLanguage: string | null;
+  selectedParadigm: string | null;
 
   onChangeLayout(newIndex: number): void;
   onSelectLanguage(key: string): void;
   onSearchLanguage(key: string): void;
+  onSearchParadigm(id: string | null): void;
   onClose(): void;
 }
 
 function HomePage({
   layoutIndex,
+  selectedParadigm,
   onChangeLayout,
   onSearchLanguage,
+  onSearchParadigm,
 }: SideboxProps) {
   return (
     <>
@@ -76,11 +81,12 @@ function HomePage({
       <themed.h2>🛠️ Paradigm</themed.h2>
       <Select<string>
         sx={{ width: "100%" }}
-        options={Object.entries(languageData).map(([id, lang]) => ({
-          label: lang.label,
+        options={Object.entries(paradigmData).map(([id, paradigm]) => ({
+          label: paradigm.name,
           value: id,
         }))}
-        onChange={(e) => onSearchLanguage((e as any).value)}
+        value={selectedParadigm || undefined}
+        onChange={(e) => onSearchParadigm(e === null ? null : (e as any).value)}
         placeholder="Search for languages"
       />
     </>
