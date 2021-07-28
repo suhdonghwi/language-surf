@@ -7,6 +7,7 @@ import { languageData } from "../data/Language";
 import layouts from "../data/Layout";
 import { Themed as themed } from "theme-ui";
 import { paradigmData } from "../data/Paradigm";
+import { typingData } from "../data/Typing";
 
 function cutSentences(input: string, n: number) {
   let result = "",
@@ -31,22 +32,28 @@ function cutSentences(input: string, n: number) {
 interface SideboxProps {
   visible: boolean;
   layoutIndex: number;
+
   selectedLanguage: string | null;
   selectedParadigm: string | null;
+  selectedTyping: string | null;
 
   onChangeLayout(newIndex: number): void;
   onSelectLanguage(key: string): void;
+  onClose(): void;
+
   onSearchLanguage(key: string): void;
   onSearchParadigm(id: string | null): void;
-  onClose(): void;
+  onSearchTyping(id: string | null): void;
 }
 
 function HomePage({
   layoutIndex,
   selectedParadigm,
+  selectedTyping,
   onChangeLayout,
   onSearchLanguage,
   onSearchParadigm,
+  onSearchTyping,
 }: SideboxProps) {
   return (
     <>
@@ -87,7 +94,18 @@ function HomePage({
         }))}
         value={selectedParadigm || undefined}
         onChange={(e) => onSearchParadigm(e === null ? null : (e as any).value)}
-        placeholder="Search for languages"
+        placeholder="Search for programming paradigms"
+      />
+      <themed.h2>🛑 Typing discipline</themed.h2>
+      <Select<string>
+        sx={{ width: "100%" }}
+        options={Object.entries(typingData).map(([id, typing]) => ({
+          label: typing.name,
+          value: id,
+        }))}
+        value={selectedTyping || undefined}
+        onChange={(e) => onSearchTyping(e === null ? null : (e as any).value)}
+        placeholder="Search for typing disciplines"
       />
     </>
   );

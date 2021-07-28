@@ -10,8 +10,10 @@ import Sidebox from "./components/Sidebox";
 function App() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [layoutIndex, setLayoutIndex] = useState(0);
+
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [selectedParadigm, setSelectedParadigm] = useState<string | null>(null);
+  const [selectedTyping, setSelectedTyping] = useState<string | null>(null);
 
   const onClose = useCallback(() => {
     if (selectedLanguage === null) setShowSidebar(false);
@@ -29,7 +31,13 @@ function App() {
   }, []);
 
   const onSearchParadigm = useCallback((id: string | null) => {
+    setSelectedTyping(null);
     setSelectedParadigm(id);
+  }, []);
+
+  const onSearchTyping = useCallback((id: string | null) => {
+    setSelectedParadigm(null);
+    setSelectedTyping(id);
   }, []);
 
   return (
@@ -39,6 +47,7 @@ function App() {
         onClick={onSelectLanguage}
         selectedLanguage={selectedLanguage}
         selectedParadigm={selectedParadigm}
+        selectedTyping={selectedTyping}
       />
       <Sidebox
         visible={showSidebar}
@@ -46,10 +55,12 @@ function App() {
         layoutIndex={layoutIndex}
         selectedLanguage={selectedLanguage}
         selectedParadigm={selectedParadigm}
+        selectedTyping={selectedTyping}
         onChangeLayout={setLayoutIndex}
         onSelectLanguage={onSelectLanguage}
         onSearchLanguage={onSearchLanguage}
         onSearchParadigm={onSearchParadigm}
+        onSearchTyping={onSearchTyping}
       />
       <button
         onClick={() => setShowSidebar(true)}

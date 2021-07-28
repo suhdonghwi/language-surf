@@ -9,8 +9,10 @@ import Loading from "./Loading";
 
 interface LanguageNetworkProps {
   layoutIndex: number;
+
   selectedLanguage: string | null;
   selectedParadigm: string | null;
+  selectedTyping: string | null;
 
   onClick(id: string): void;
 }
@@ -19,6 +21,7 @@ export default function LanguageNetwork({
   layoutIndex,
   selectedLanguage,
   selectedParadigm,
+  selectedTyping,
   onClick,
 }: LanguageNetworkProps) {
   const graph = useMemo(() => {
@@ -62,17 +65,21 @@ export default function LanguageNetwork({
   }, [graph]);
 
   useEffect(() => {
-    if (selectedParadigm === null) {
+    if (selectedParadigm === null && selectedTyping === null) {
       setHighlights([]);
       return;
     }
 
     setHighlights(
       Object.entries(languageData)
-        .filter(([_, l]) => l.paradigm.includes(Number(selectedParadigm)))
+        .filter(([_, l]) =>
+          selectedParadigm === null
+            ? l.typing.includes(Number(selectedTyping))
+            : l.paradigm.includes(Number(selectedParadigm))
+        )
         .map(([key, _]) => key)
     );
-  }, [selectedParadigm]);
+  }, [selectedParadigm, selectedTyping]);
 
   return layoutData === null ? (
     <Loading />
