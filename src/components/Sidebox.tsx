@@ -78,7 +78,7 @@ function HomePage({
 }
 
 function LanguagePage({ selectedLanguage }: { selectedLanguage: string }) {
-  const lang = languageData[Number(selectedLanguage)];
+  const lang = languageData[selectedLanguage];
 
   return (
     <>

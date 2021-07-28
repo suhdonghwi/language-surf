@@ -14,10 +14,10 @@ export default interface Language {
   typing: number[];
 }
 
-export const languageData: Record<number, Language> = {};
+export const languageData: Record<string, Language> = {};
 
 for (const [id, raw_data] of Object.entries(languageJson)) {
-  languageData[Number(id)] = {
+  languageData[id] = {
     ...raw_data,
     inception:
       raw_data.inception == null
