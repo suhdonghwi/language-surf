@@ -73,6 +73,16 @@ function HomePage({
         onChange={(e) => onSearchLanguage((e as any).value)}
         placeholder="Search for languages"
       />
+      <themed.h2>🛠️ Paradigm</themed.h2>
+      <Select<string>
+        sx={{ width: "100%" }}
+        options={Object.entries(languageData).map(([id, lang]) => ({
+          label: lang.label,
+          value: id,
+        }))}
+        onChange={(e) => onSearchLanguage((e as any).value)}
+        placeholder="Search for languages"
+      />
     </>
   );
 }

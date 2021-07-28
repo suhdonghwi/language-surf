@@ -16,15 +16,15 @@ export default interface Language {
 
 export const languageData: Record<string, Language> = {};
 
-for (const [id, raw_data] of Object.entries(languageJson)) {
+for (const [id, rawData] of Object.entries(languageJson)) {
   languageData[id] = {
-    ...raw_data,
+    ...rawData,
     inception:
-      raw_data.inception == null
+      rawData.inception == null
         ? null
         : {
-            time: new Date(raw_data.inception.time),
-            precision: raw_data.inception.precision,
+            time: new Date(rawData.inception.time),
+            precision: rawData.inception.precision,
           },
   };
 }
