@@ -1,138 +1,187 @@
 {
   "0": {
     "name": "class-based",
-    "description": "object-oriented programming paradigm"
+    "description": "object-oriented programming paradigm",
+    "derived": []
   },
   "1": {
     "name": "data-driven",
-    "description": "programming paradigm"
+    "description": "programming paradigm",
+    "derived": []
   },
   "2": {
     "name": "procedural",
-    "description": "programming paradigm"
+    "description": "programming paradigm",
+    "derived": []
   },
   "3": {
     "name": "imperative",
-    "description": "type of programming paradigm in computer science"
+    "description": "type of programming paradigm in computer science",
+    "derived": [2, 6]
   },
   "4": {
     "name": "concurrent object-oriented",
-    "description": "programming paradigm that combines object-oriented programming (OOP) together with concurrency"
+    "description": "programming paradigm that combines object-oriented programming (OOP) together with concurrency",
+    "derived": []
   },
   "5": {
     "name": "constraint",
-    "description": "programming paradigm wherein relations between variables are stated in the form of constraints"
+    "description": "programming paradigm wherein relations between variables are stated in the form of constraints",
+    "derived": [11]
   },
   "6": {
     "name": "object-oriented",
-    "description": "programming paradigm based on the concept of objects"
+    "description": "programming paradigm based on the concept of objects",
+    "derived": [0, 4, 14, 31]
   },
   "7": {
     "name": "parallel",
-    "description": "programming paradigm in which many calculations or the execution of processes are carried out simultaneously"
+    "description": "programming nullparadigm in which many calculations or the execution of processes are carried out simultaneously",
+    "derived": []
   },
   "8": {
     "name": "natural-language",
-    "description": "Language-oriented programming paradigm"
+    "description": "Language-oriented programming paradigm",
+    "derived": []
   },
   "9": {
     "name": "reflective",
-    "description": "ability of a process to examine and modify itself"
+    "description": "ability of a process to examine and modify itself",
+    "derived": []
   },
   "10": {
     "name": "visual",
-    "description": "computer programming language to create programs by manipulating program elements graphically"
+    "description": "computer programming language to create programs by manipulating program elements graphically",
+    "derived": []
   },
   "11": {
     "name": "constraint logic",
-    "description": "Programming paradigm which combines logic programming and constraint satisfaction"
+    "description": "Programming paradigm which combines logic programming and constraint satisfaction",
+    "derived": [27]
   },
   "12": {
     "name": "event-driven",
-    "description": "programming paradigm"
+    "description": "programming paradigm",
+    "derived": []
   },
   "13": {
     "name": "declarative",
-    "description": "programming paradigm that expresses the logic of a computation without describing its control flow"
+    "description": "programming paradigm that expresses the logic of a computation without describing its control flow",
+    "derived": [21, 28, 5, 22]
   },
   "14": {
     "name": "prototype-based",
-    "description": "style of object-oriented programming"
+    "description": "style of object-oriented programming",
+    "derived": []
   },
   "15": {
     "name": "reactive",
-    "description": "programming paradigm focused on data flow and change propragation"
+    "description": "programming paradigm focused on data flow and change propragation",
+    "derived": [24]
   },
   "16": {
     "name": "concurrent",
-    "description": "form of computing in which several computations are executing during overlapping time periods"
+    "description": "form of computing in which several computations are executing during overlapping time periods",
+    "derived": []
   },
   "17": {
     "name": "synchronous",
-    "description": "programming paradigm supported by synchronous programming languages"
+    "description": "programming paradigm supported by synchronous programming languages",
+    "derived": []
   },
-  "18": { "name": "modular", "description": "" },
+  "18": {
+    "name": "modular",
+    "description": "",
+    "derived": []
+  },
   "19": {
     "name": "agent-oriented",
-    "description": "programming paradigm centred on the concept of software agents"
+    "description": "programming paradigm centred on the concept of software agents",
+    "derived": []
   },
   "20": {
     "name": "array",
-    "description": "programming paradigm that generalize operations on scalars to apply transparently to higher-dimensional arrays"
+    "description": "programming paradigm that generalize operations on scalars to apply transparently to higher-dimensional arrays",
+    "derived": []
   },
   "21": {
     "name": "functional",
-    "description": "programming paradigm"
+    "description": "programming paradigm",
+    "derived": [29]
   },
   "22": {
     "name": "dataflow",
-    "description": "programming paradigm that models program as a directed graph of data flow between operations"
+    "description": "programming paradigm that models program as a directed graph of data flow between operations",
+    "derived": [15]
   },
   "23": {
     "name": "concatenative",
-    "description": "point-free programming paradigm"
+    "description": "point-free programming paradigm",
+    "derived": []
   },
   "24": {
     "name": "functional reactive",
-    "description": "programming paradigm for reactive programming using key features of functional programming"
+    "description": "programming paradigm for reactive programming using key features of functional programming",
+    "derived": []
   },
-  "25": { "name": "metaprogramming", "description": "programming paradigm" },
+  "25": {
+    "name": "metaprogramming",
+    "description": "programming paradigm",
+    "derived": [9]
+  },
   "26": {
     "name": "generic",
-    "description": "way of designing and writing programs where algorithms are written in terms of parametric types enabling easy reuse"
+    "description": "way of designing and writing programs where algorithms are written in terms of parametric types enabling easy reuse",
+    "derived": []
   },
   "27": {
     "name": "concurrent constraint logic",
-    "description": ""
+    "description": "",
+    "derived": []
   },
   "28": {
     "name": "logic",
-    "description": "programming paradigm based on formal logic"
+    "description": "programming paradigm based on formal logic",
+    "derived": []
   },
   "29": {
     "name": "purely functional",
-    "description": "programming paradigm that treats all computation as the evaluation of mathematical functions"
+    "description": "programming paradigm that treats all computation as the evaluation of mathematical functions",
+    "derived": []
   },
-  "30": { "name": "process-oriented", "description": "" },
+  "30": {
+    "name": "process-oriented",
+    "description": "",
+    "derived": []
+  },
   "31": {
     "name": "aspect-oriented",
-    "description": "programming paradigm"
+    "description": "programming paradigm",
+    "derived": []
   },
   "32": {
     "name": "function-level",
-    "description": "programming paradigm"
+    "description": "programming paradigm",
+    "derived": [35]
   },
   "33": {
     "name": "stack-oriented",
-    "description": "programming paradigm that relies on a stack machine model"
+    "description": "programming paradigm that relies on a stack machine model",
+    "derived": []
   },
   "34": {
     "name": "language-oriented",
-    "description": "programming paradigm"
+    "description": "programming paradigm",
+    "derived": []
   },
-  "35": { "name": "tacit", "description": "programming paradigm" },
+  "35": {
+    "name": "point-free",
+    "description": "programming paradigm",
+    "derived": [23]
+  },
   "36": {
     "name": "structured",
-    "description": "programming paradigm aimed at improving clarity, quality, and development time by using control structures"
+    "description": "programming paradigm aimed at improving clarity, quality, and development time by using control structures",
+    "derived": [6]
   }
 }
