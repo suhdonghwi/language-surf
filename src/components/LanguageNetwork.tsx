@@ -6,6 +6,7 @@ import layouts, { LayoutResult } from "../data/Layout";
 import NodeAttribute from "../data/NodeAttribute";
 import Network from "./Network";
 import Loading from "./Loading";
+import { paradigmData } from "../data/Paradigm";
 
 interface LanguageNetworkProps {
   layoutIndex: number;
@@ -70,14 +71,24 @@ export default function LanguageNetwork({
       return;
     }
 
+    function findLanguages(id: number): string[] {
+      const langs: string[] = Object.entries(languageData)
+        .filter(([_, l]) => l.paradigm.includes(id))
+        .map(([key, _]) => key);
+
+      const derived: string[] = paradigmData[id].derived.flatMap((p) =>
+        findLanguages(p)
+      );
+
+      return langs.concat(derived);
+    }
+
     setHighlights(
-      Object.entries(languageData)
-        .filter(([_, l]) =>
-          selectedParadigm === null
-            ? l.typing.includes(Number(selectedTyping))
-            : l.paradigm.includes(Number(selectedParadigm))
-        )
-        .map(([key, _]) => key)
+      selectedParadigm === null
+        ? Object.entries(languageData)
+            .filter(([_, l]) => l.typing.includes(Number(selectedTyping)))
+            .map(([key, _]) => key)
+        : findLanguages(selectedParadigm)
     );
   }, [selectedParadigm, selectedTyping]);
 
