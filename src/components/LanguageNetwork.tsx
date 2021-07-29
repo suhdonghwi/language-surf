@@ -10,11 +10,11 @@ import Loading from "./Loading";
 interface LanguageNetworkProps {
   layoutIndex: number;
 
-  selectedLanguage: string | null;
-  selectedParadigm: string | null;
-  selectedTyping: string | null;
+  selectedLanguage: number | null;
+  selectedParadigm: number | null;
+  selectedTyping: number | null;
 
-  onClick(id: string): void;
+  onClick(id: number): void;
 }
 
 export default function LanguageNetwork({

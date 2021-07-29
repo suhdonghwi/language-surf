@@ -5,8 +5,8 @@ export default interface Typing {
   description: string;
 }
 
-export const typingData: Record<string, Typing> = {};
+export const typingData: Record<number, Typing> = {};
 
 for (const [id, rawData] of Object.entries(typingJson)) {
-  typingData[id] = rawData;
+  typingData[Number(id)] = rawData;
 }

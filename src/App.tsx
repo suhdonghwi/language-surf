@@ -11,31 +11,31 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [layoutIndex, setLayoutIndex] = useState(0);
 
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-  const [selectedParadigm, setSelectedParadigm] = useState<string | null>(null);
-  const [selectedTyping, setSelectedTyping] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<number | null>(null);
+  const [selectedParadigm, setSelectedParadigm] = useState<number | null>(null);
+  const [selectedTyping, setSelectedTyping] = useState<number | null>(null);
 
   const onClose = useCallback(() => {
     if (selectedLanguage === null) setShowSidebar(false);
     else setSelectedLanguage(null);
   }, [selectedLanguage]);
 
-  const onSelectLanguage = useCallback((id: string) => {
+  const onSelectLanguage = useCallback((id: number) => {
     setSelectedLanguage(id);
     setShowSidebar(true);
   }, []);
 
-  const onSearchLanguage = useCallback((id: string) => {
+  const onSearchLanguage = useCallback((id: number) => {
     setSelectedParadigm(null);
     setSelectedLanguage(id);
   }, []);
 
-  const onSearchParadigm = useCallback((id: string | null) => {
+  const onSearchParadigm = useCallback((id: number | null) => {
     setSelectedTyping(null);
     setSelectedParadigm(id);
   }, []);
 
-  const onSearchTyping = useCallback((id: string | null) => {
+  const onSearchTyping = useCallback((id: number | null) => {
     setSelectedParadigm(null);
     setSelectedTyping(id);
   }, []);

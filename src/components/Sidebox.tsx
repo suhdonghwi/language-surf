@@ -33,17 +33,17 @@ interface SideboxProps {
   visible: boolean;
   layoutIndex: number;
 
-  selectedLanguage: string | null;
-  selectedParadigm: string | null;
-  selectedTyping: string | null;
+  selectedLanguage: number | null;
+  selectedParadigm: number | null;
+  selectedTyping: number | null;
 
   onChangeLayout(newIndex: number): void;
-  onSelectLanguage(key: string): void;
+  onSelectLanguage(id: number): void;
   onClose(): void;
 
-  onSearchLanguage(key: string): void;
-  onSearchParadigm(id: string | null): void;
-  onSearchTyping(id: string | null): void;
+  onSearchLanguage(id: number): void;
+  onSearchParadigm(id: number | null): void;
+  onSearchTyping(id: number | null): void;
 }
 
 function HomePage({
@@ -76,32 +76,32 @@ function HomePage({
         searchable={false}
       />
       <themed.h2>🔎 Search for languages</themed.h2>
-      <Select<string>
+      <Select<number>
         sx={{ width: "100%" }}
         options={Object.entries(languageData).map(([id, lang]) => ({
           label: lang.label,
-          value: id,
+          value: Number(id),
         }))}
         onChange={(e) => onSearchLanguage((e as any).value)}
         placeholder="Search for languages"
       />
       <themed.h2>🛠️ Paradigm</themed.h2>
-      <Select<string>
+      <Select<number>
         sx={{ width: "100%" }}
         options={Object.entries(paradigmData).map(([id, paradigm]) => ({
           label: paradigm.name,
-          value: id,
+          value: Number(id),
         }))}
         value={selectedParadigm || undefined}
         onChange={(e) => onSearchParadigm(e === null ? null : (e as any).value)}
         placeholder="Search for programming paradigms"
       />
       <themed.h2>🛑 Typing discipline</themed.h2>
-      <Select<string>
+      <Select<number>
         sx={{ width: "100%" }}
         options={Object.entries(typingData).map(([id, typing]) => ({
           label: typing.name,
-          value: id,
+          value: Number(id),
         }))}
         value={selectedTyping || undefined}
         onChange={(e) => onSearchTyping(e === null ? null : (e as any).value)}
@@ -134,7 +134,7 @@ const InfoBody = ({ children, ...props }: DividerProps) => (
   </div>
 );
 
-function LanguagePage({ selectedLanguage }: { selectedLanguage: string }) {
+function LanguagePage({ selectedLanguage }: { selectedLanguage: number }) {
   const lang = languageData[selectedLanguage];
 
   return (
@@ -159,8 +159,8 @@ function LanguagePage({ selectedLanguage }: { selectedLanguage: string }) {
         <InfoTitle>Influenced</InfoTitle>
         <InfoBody>
           {influenceData
-            .filter((d) => d.source.toString() === selectedLanguage)
-            .map((d) => languageData[d.target.toString()].label)
+            .filter((d) => d.source === selectedLanguage)
+            .map((d) => languageData[d.target].label)
             .sort()
             .join(", ")}
         </InfoBody>
@@ -168,8 +168,8 @@ function LanguagePage({ selectedLanguage }: { selectedLanguage: string }) {
         <InfoTitle>Influenced by</InfoTitle>
         <InfoBody>
           {influenceData
-            .filter((d) => d.target.toString() === selectedLanguage)
-            .map((d) => languageData[d.source.toString()].label)
+            .filter((d) => d.target === selectedLanguage)
+            .map((d) => languageData[d.source].label)
             .sort()
             .join(", ")}
         </InfoBody>

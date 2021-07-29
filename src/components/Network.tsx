@@ -10,10 +10,10 @@ import { LayoutMapping } from "../data/Layout";
 interface NetworkProps {
   graph: DirectedGraph<NodeAttribute>;
   layoutMapping: LayoutMapping;
-  focusTo: string | null;
+  focusTo: number | null;
   highlights: string[];
 
-  onClick(id: string): void;
+  onClick(id: number): void;
 }
 
 export default function Network({
@@ -30,7 +30,9 @@ export default function Network({
     defaultNodeColor = "#495057";
 
   const focusNode = useCallback(
-    (focusKey: string) => {
+    (id: number) => {
+      let focusKey = id.toString();
+
       let influencedToEdges: Set<string> = new Set(),
         influencedToNodes: Set<string> = new Set();
       let influencedByEdges: Set<string> = new Set(),
@@ -144,7 +146,7 @@ export default function Network({
 
     function enterNode(e: any) {
       document.body.style.cursor = "pointer";
-      focusNode(e.node);
+      focusNode(Number(e.node));
     }
 
     function leaveNode() {
@@ -154,7 +156,7 @@ export default function Network({
 
     function clickNode(e: any) {
       document.body.style.cursor = "default";
-      onClick(e.node);
+      onClick(Number(e.node));
     }
 
     renderer.on("enterNode", enterNode);
