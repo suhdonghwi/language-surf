@@ -1,1 +1,53 @@
-{"0": {"name": "dependently typed programming", "description": "programming"}, "1": {"name": "strong typing", "description": "specificity of a programming language's syntax when manipulating types of data"}, "2": {"name": "weak typing", "description": "the opposite of strong typing discipline"}, "3": {"name": "parametric polymorphism", "description": "the basis of generic programming"}, "4": {"name": "nominative typing", "description": "major class of type system, in which compatibility and equivalence of data types is determined by explicit declarations and/or the name of the types"}, "5": {"name": "gradual typing", "description": "typing system"}, "6": {"name": "inference typing", "description": "automatic detection of the data type of an expression in a programming language"}, "7": {"name": "polymorphism", "description": "in programming languages and type theory, accessing different types using a common interface"}, "8": {"name": "partial inference typing", "description": "a style of dynamic typing in object-oriented programming"}, "9": {"name": "linear typing", "description": ""}, "10": {"name": "dynamic typing", "description": "a style of dynamic typing in object oriented programming"}, "11": {"name": "static typing", "description": "type system paradigm where all type checking is done at compile time"}, "12": {"name": "structural type system", "description": "major class of type system, in which type compatibility and equivalence are determined by the type's actual structure or definition, and not by other characteristics such as its name or place of declaration"}, "13": {"name": "duck typing", "description": "a style of dynamic typing in object oriented programming"}, "14": {"name": "manifest typing", "description": ""}}
+{
+  "0": {
+    "name": "dependent",
+    "description": "programming"
+  },
+  "1": {
+    "name": "strong",
+    "description": "specificity of a programming language's syntax when manipulating types of data"
+  },
+  "2": {
+    "name": "weak",
+    "description": "the opposite of strong typing discipline"
+  },
+  "3": {
+    "name": "parametric",
+    "description": "the basis of generic programming"
+  },
+  "4": {
+    "name": "nominative",
+    "description": "major class of type system, in which compatibility and equivalence of data types is determined by explicit declarations and/or the name of the types"
+  },
+  "5": { "name": "gradual typing", "description": "typing system" },
+  "6": {
+    "name": "inference",
+    "description": "automatic detection of the data type of an expression in a programming language"
+  },
+  "7": {
+    "name": "polymorphic",
+    "description": "in programming languages and type theory, accessing different types using a common interface"
+  },
+  "8": {
+    "name": "partial inference",
+    "description": "a style of dynamic typing in object-oriented programming"
+  },
+  "9": { "name": "linear", "description": "" },
+  "10": {
+    "name": "dynamic",
+    "description": "a style of dynamic typing in object oriented programming"
+  },
+  "11": {
+    "name": "static",
+    "description": "type system paradigm where all type checking is done at compile time"
+  },
+  "12": {
+    "name": "structural",
+    "description": "major class of type system, in which type compatibility and equivalence are determined by the type's actual structure or definition, and not by other characteristics such as its name or place of declaration"
+  },
+  "13": {
+    "name": "duck",
+    "description": "a style of dynamic typing in object oriented programming"
+  },
+  "14": { "name": "manifest", "description": "" }
+}

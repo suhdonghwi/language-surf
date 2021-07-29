@@ -3,9 +3,9 @@ import { FaAngleLeft, FaTimes } from "react-icons/fa";
 import Select from "react-virtualized-select";
 import ReactMarkdown from "react-markdown";
 
-import { languageData } from "../data/Language";
+import { influenceData, languageData } from "../data/Language";
 import layouts from "../data/Layout";
-import { Themed as themed } from "theme-ui";
+import { DividerProps, HeadingProps, Themed as themed } from "theme-ui";
 import { paradigmData } from "../data/Paradigm";
 import { typingData } from "../data/Typing";
 
@@ -111,6 +111,29 @@ function HomePage({
   );
 }
 
+const InfoTitle = (props: HeadingProps) => (
+  // eslint-disable-next-line
+  <h2
+    {...props}
+    sx={{
+      margin: 0,
+      fontSize: 2,
+      textAlign: "left",
+      marginY: 3,
+    }}
+  />
+);
+
+const InfoBody = ({ children, ...props }: DividerProps) => (
+  <div {...props} sx={{ paddingLeft: 2, marginY: 2 }}>
+    {children === "" ? (
+      <span sx={{ color: "darkGray" }}>(no data)</span>
+    ) : (
+      children
+    )}
+  </div>
+);
+
 function LanguagePage({ selectedLanguage }: { selectedLanguage: string }) {
   const lang = languageData[selectedLanguage];
 
@@ -120,6 +143,47 @@ function LanguagePage({ selectedLanguage }: { selectedLanguage: string }) {
         {lang.label}
       </themed.h1>
       <ReactMarkdown>{cutSentences(lang.description, 2)}</ReactMarkdown>
+      <div
+        sx={{
+          display: "grid",
+          width: "100%",
+          gridTemplateColumns: "7rem 1fr",
+          alignItems: "center",
+          borderWidth: "1px 0 0 0",
+          borderColor: "gray",
+          borderStyle: "solid",
+          marginTop: 3,
+          paddingTop: 3,
+        }}
+      >
+        <InfoTitle>Influenced</InfoTitle>
+        <InfoBody>
+          {influenceData
+            .filter((d) => d.source.toString() === selectedLanguage)
+            .map((d) => languageData[d.target.toString()].label)
+            .sort()
+            .join(", ")}
+        </InfoBody>
+
+        <InfoTitle>Influenced by</InfoTitle>
+        <InfoBody>
+          {influenceData
+            .filter((d) => d.target.toString() === selectedLanguage)
+            .map((d) => languageData[d.source.toString()].label)
+            .sort()
+            .join(", ")}
+        </InfoBody>
+
+        <InfoTitle>Paradigm</InfoTitle>
+        <InfoBody>
+          {lang.paradigm.map((id) => paradigmData[id].name).join(", ")}
+        </InfoBody>
+
+        <InfoTitle>Typing</InfoTitle>
+        <InfoBody>
+          {lang.typing.map((id) => typingData[id].name).join(", ")}
+        </InfoBody>
+      </div>
     </>
   );
 }
