@@ -135,7 +135,7 @@ export default function Sidebox(props: SideboxProps) {
         left: 0,
         zIndex: 1,
         backgroundColor: "background",
-        width: "21rem",
+        width: "24rem",
         height: "100%",
         boxShadow: "0 4px 12px 0px rgba(0,0,0,.25)",
         padding: 4,
@@ -144,6 +144,8 @@ export default function Sidebox(props: SideboxProps) {
         alignItems: "center",
         transform: visible ? "" : "translateX(-100%)",
         transition: "transform 0.3s",
+        overflow: "scroll",
+        boxSizing: "border-box",
       }}
     >
       <button
